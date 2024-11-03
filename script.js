@@ -5,4 +5,7 @@ function createTicTacToeBox() {
         status = newStatus ? true : false;
     }
     const getStatus = () => status;
+
+    return { changeStatus, getStatus }
 };
+

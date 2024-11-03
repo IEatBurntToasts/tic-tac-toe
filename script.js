@@ -5,9 +5,9 @@ const gameBoard = (function() {
         gameBoardBoxes.push(createTicTacToeBox(i));
     }
 
-    const getBox = (positionNum) => {
+    const getBox = (boxPositionNumber) => {
         return gameBoardBoxes.find(({ positionNumber }) => {
-            return positionNum === positionNumber;
+            return boxPositionNumber === positionNumber;
         });
     }
     const changeBoxSymbol = (boxPositionNumber, newSymbol) => {
@@ -15,8 +15,9 @@ const gameBoard = (function() {
 
         box.changeSymbol(newSymbol);
     }
+    const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol } 
+    return { changeBoxSymbol, getGameBoard } 
 })();
 
 function createPlayer(name, symbol) {

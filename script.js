@@ -4,6 +4,19 @@ const gameBoard = (function() {
     for (let i = 0; i < 10; i++) {
         gameBoardBoxes.push(createTicTacToeBox(i));
     }
+
+    const getBox = (positionNum) => {
+        return gameBoardBoxes.find(({ positionNumber }) => {
+            return positionNum === positionNumber;
+        });
+    }
+    const changeBoxSymbol = (boxPositionNumber, newSymbol) => {
+        const box = getBox(boxPositionNumber);
+
+        box.changeSymbol(newSymbol);
+    }
+
+    return { changeBoxSymbol } 
 })();
 
 function createPlayer(name, symbol) {

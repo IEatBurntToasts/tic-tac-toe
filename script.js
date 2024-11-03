@@ -1,5 +1,9 @@
 const gameBoard = (function() {
-    let gameBoardBoxes = 
+    let gameBoardBoxes = [];
+
+    for (let i = 0; i < 10; i++) {
+        gameBoardBoxes.push(createTicTacToeBox(i));
+    }
 })();
 
 function createPlayer(name, symbol) {

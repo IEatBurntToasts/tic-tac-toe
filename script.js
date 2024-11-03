@@ -15,9 +15,8 @@ const gameBoard = (function() {
 
         box.changeSymbol(newSymbol);
     }
-    const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol, getGameBoard } 
+    return { changeBoxSymbol } 
 })();
 
 function createPlayer(name, symbol) {
@@ -34,7 +33,7 @@ function createPlayer(name, symbol) {
 }
 
 function createTicTacToeBox(positionNumber) {
-    let symbol;
+    let symbol = null;
 
     const getPositionNumber = () => positionNumber;
     const changeSymbol = (newSymbol) => {

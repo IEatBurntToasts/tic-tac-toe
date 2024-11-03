@@ -1,11 +1,13 @@
 function createTicTacToeBox() {
-    let status;
+    let symbol;
 
-    const changeStatus = (newStatus) => {
-        status = newStatus ? true : false;
+    const changeStatus = (newSymbol) => {
+        symbol = newSymbol;
     }
-    const getStatus = () => status;
+    const getSymbol = () => symbol;
 
-    return { changeStatus, getStatus }
+    return { changeStatus, getSymbol }
 };
+
+
 

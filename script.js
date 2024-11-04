@@ -85,21 +85,31 @@ const gameBoard = (function() {
     }
     const checkDiagWin = () => {
         if (gameBoardBoxes[0].getSymbol() === gameBoardBoxes[4].getSymbol() && gameBoardBoxes[4].getSymbol() === gameBoardBoxes[8].getSymbol()) {
-            const winningSymbol = gameBoardBoxes[0].getSymbol();
-            const winningIndexes = [0,4,8];
-            return { winningSymbol, winningIndexes }
+            if (gameBoardBoxes[0].getSymbol() !== null && gameBoardBoxes[4].getSymbol() !== null && gameBoardBoxes[8].getSymbol() !== null) {
+                const winningSymbol = gameBoardBoxes[0].getSymbol();
+                const winningIndexes = [0,4,8];
+                return { winningSymbol, winningIndexes }
+            }
         } else if (gameBoardBoxes[2].getSymbol() === gameBoardBoxes[4].getSymbol() && gameBoardBoxes[4].getSymbol() === gameBoardBoxes[6].getSymbol()) {
-            const winningSymbol = gameBoardBoxes[2].getSymbol();
-            const winningIndexes = [2,4,6];
-            return { winningSymbol, winningIndexes }
+            if (gameBoardBoxes[2].getSymbol() !== null && gameBoardBoxes[4].getSymbol() !== null && gameBoardBoxes[6].getSymbol() !== null) {
+                const winningSymbol = gameBoardBoxes[2].getSymbol();
+                const winningIndexes = [2,4,6];
+                return { winningSymbol, winningIndexes }
+            }
         } else {
             return false;
         }
     }
+    const checkWin = () => {
+        const rowWin = checkRowWin();
+        const colWin = checkColumnWin();
+        const diagWin = checkDiagWin();
+        return { rowWin, colWin, diagWin };
+    }
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol, getGameBoard, checkRowWin, checkColumnWin, checkDiagWin } 
+    return { changeBoxSymbol, getGameBoard, checkRowWin, checkColumnWin, checkDiagWin, checkWin } 
 })();
 
 function createPlayer(name, symbol) {

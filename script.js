@@ -17,11 +17,14 @@ const gameBoard = (function() {
     }
     const checkRowWin = () => {
         const boxesPerRow = Math.sqrt(gameBoardBoxes.length);
+        let winningIndexes = [];
         let countRowsLeft = boxesPerRow;
         let currentRowFirstIndex = 0;
  
         while (countRowsLeft > 0) {
             let symbolsMatched = 0;
+
+            winningIndexes.push(currentRowFirstIndex);
 
             for (let i = currentRowFirstIndex; i < (boxesPerRow + currentRowFirstIndex - 1); i++) {
                 if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + 1].getSymbol() === null) {
@@ -32,12 +35,14 @@ const gameBoard = (function() {
                     currentRowFirstIndex += boxesPerRow;
                     break;
                 } else {
+                    winningIndexes.push(i + 1);
                     symbolsMatched++;
                 }
             }
             if (symbolsMatched === (boxesPerRow - 1)) {
-                return true;
+                return winningIndexes;
             }
+            winningIndexes = [];
             countRowsLeft--;
         }
         return false;

@@ -1,7 +1,7 @@
 const gameBoard = (function() {
     let gameBoardBoxes = [];
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 9; i++) {
         gameBoardBoxes.push(createTicTacToeBox(i));
     }
 
@@ -15,8 +15,34 @@ const gameBoard = (function() {
 
         box.changeSymbol(newSymbol);
     }
+    const checkRowWin = () => {
+        const numOfRows = Math.sqrt(gameBoardBoxes.length);
+        let countRowsLeft = numOfRows;
+        let currentRowFirstIndex = 0;
+ 
+        while (countRowsLeft > 0) {
+            for (let i = currentRowFirstIndex; i < numOfRows - 1; i++) {
+                if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + 1].getSymbol() === null) {
+                    currentRowFirstIndex += numOfRows;
+                    break;
+                }
+                else if (gameBoardBoxes[i].getSymbol() !== gameBoardBoxes[i + 1].getSymbol()) {
+                    currentRowFirstIndex += numOfRows;
+                    break;
+                } else {
+                    return true;
+                }
+            }
 
-    return { changeBoxSymbol } 
+            countRowsLeft--;
+        }
+
+        return false;
+    }
+
+    const getGameBoard = () => gameBoardBoxes;
+
+    return { changeBoxSymbol, getGameBoard, checkRowWin } 
 })();
 
 function createPlayer(name, symbol) {

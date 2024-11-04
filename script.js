@@ -17,7 +17,7 @@ const gameBoard = (function() {
     }
     const checkRowWin = () => {
         const boxesPerRow = Math.sqrt(gameBoardBoxes.length);
-        let winningMark;
+        let winningSymbol;
         let winningIndexes = [];
         let countRowsLeft = boxesPerRow;
         let currentRowFirstIndex = 0;
@@ -41,8 +41,8 @@ const gameBoard = (function() {
                 }
             }
             if (symbolsMatched === (boxesPerRow - 1)) {
-                winningMark = gameBoardBoxes[currentRowFirstIndex].getSymbol();
-                return { winningMark, winningIndexes }
+                winningSymbol = gameBoardBoxes[currentRowFirstIndex].getSymbol();
+                return { winningSymbol, winningIndexes }
             }
             winningIndexes = [];
             countRowsLeft--;
@@ -52,7 +52,7 @@ const gameBoard = (function() {
     const checkColumnWin = () => {
         const boxesPerColumn = Math.sqrt(gameBoardBoxes.length);
         let winningIndexes = [];
-        let winningMark;
+        let winningSymbol;
         let countColumnsLeft = boxesPerColumn;
         let currentColumnFirstIndex = 0;
  
@@ -75,8 +75,8 @@ const gameBoard = (function() {
                 }
             }
             if (symbolsMatched === (boxesPerColumn - 1)) {
-                winningMark = gameBoardBoxes[currentColumnFirstIndex].getSymbol();
-                return { winningMark, winningIndexes }
+                winningSymbol = gameBoardBoxes[currentColumnFirstIndex].getSymbol();
+                return { winningSymbol, winningIndexes }
             }
             winningIndexes = [];
             countColumnsLeft--;

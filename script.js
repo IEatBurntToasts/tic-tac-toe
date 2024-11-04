@@ -49,11 +49,14 @@ const gameBoard = (function() {
     }
     const checkColumnWin = () => {
         const boxesPerColumn = Math.sqrt(gameBoardBoxes.length);
+        let winningIndexes = [];
         let countColumnsLeft = boxesPerColumn;
         let currentColumnFirstIndex = 0;
  
         while (countColumnsLeft > 0) {
             let symbolsMatched = 0;
+
+            winningIndexes.push(currentColumnFirstIndex);
 
             for (let i = currentColumnFirstIndex; i < (boxesPerColumn * (boxesPerColumn - 1) + currentColumnFirstIndex); i += boxesPerColumn) {
                 if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + boxesPerColumn].getSymbol() === null) {
@@ -64,12 +67,14 @@ const gameBoard = (function() {
                     currentColumnFirstIndex++;
                     break;
                 } else {
+                    winningIndexes.push(i + boxesPerColumn);
                     symbolsMatched++;
                 }
             }
             if (symbolsMatched === (boxesPerColumn - 1)) {
-                return true;
+                return winningIndexes;
             }
+            winningIndexes = [];
             countColumnsLeft--;
         }
         return false;

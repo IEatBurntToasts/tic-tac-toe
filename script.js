@@ -1,3 +1,12 @@
+const gameManager = (function() {
+    const createGamers = (p1Name, p1Symbol, p2Name, p2Symbol) => {
+        const p1 = createPlayer(p1Name, p1Symbol);
+        const p2 = createPlayer(p2Name, p2Symbol);
+
+        return { p1, p2 }
+    }
+});
+
 const gameBoard = (function() {
     let gameBoardBoxes = [];
 
@@ -110,7 +119,7 @@ const gameBoard = (function() {
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol, getGameBoard, checkWin } 
+    return { changeBoxSymbol, getBoxSymbol, getGameBoard, checkWin } 
 })();
 
 function createPlayer(name, symbol) {

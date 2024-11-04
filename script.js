@@ -15,6 +15,7 @@ const gameBoard = (function() {
 
         box.changeSymbol(newSymbol);
     }
+    const getBoxSymbol = (boxPositionNumber) => gameBoardBoxes[boxPositionNumber].getSymbol();
     const checkRowWin = () => {
         const boxesPerRow = Math.sqrt(gameBoardBoxes.length);
         let winningSymbol;
@@ -109,7 +110,7 @@ const gameBoard = (function() {
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol, getGameBoard, checkRowWin, checkColumnWin, checkDiagWin, checkWin } 
+    return { changeBoxSymbol, getGameBoard, checkWin } 
 })();
 
 function createPlayer(name, symbol) {

@@ -17,6 +17,7 @@ const gameBoard = (function() {
     }
     const checkRowWin = () => {
         const boxesPerRow = Math.sqrt(gameBoardBoxes.length);
+        let winningMark;
         let winningIndexes = [];
         let countRowsLeft = boxesPerRow;
         let currentRowFirstIndex = 0;
@@ -40,7 +41,8 @@ const gameBoard = (function() {
                 }
             }
             if (symbolsMatched === (boxesPerRow - 1)) {
-                return winningIndexes;
+                winningMark = gameBoardBoxes[currentRowFirstIndex].getSymbol();
+                return { winningMark, winningIndexes }
             }
             winningIndexes = [];
             countRowsLeft--;
@@ -50,6 +52,7 @@ const gameBoard = (function() {
     const checkColumnWin = () => {
         const boxesPerColumn = Math.sqrt(gameBoardBoxes.length);
         let winningIndexes = [];
+        let winningMark;
         let countColumnsLeft = boxesPerColumn;
         let currentColumnFirstIndex = 0;
  
@@ -72,17 +75,21 @@ const gameBoard = (function() {
                 }
             }
             if (symbolsMatched === (boxesPerColumn - 1)) {
-                return winningIndexes;
+                winningMark = gameBoardBoxes[currentColumnFirstIndex].getSymbol();
+                return { winningMark, winningIndexes }
             }
             winningIndexes = [];
             countColumnsLeft--;
         }
         return false;
     }
+    const checkDiagWin = () => {
+
+    }
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol, getGameBoard, checkRowWin, checkColumnWin } 
+    return { changeBoxSymbol, getGameBoard, checkRowWin, checkColumnWin, checkDiagWin } 
 })();
 
 function createPlayer(name, symbol) {

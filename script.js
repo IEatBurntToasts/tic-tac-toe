@@ -50,13 +50,13 @@ const gameBoard = (function() {
         while (countColumnsLeft > 0) {
             let symbolsMatched = 0;
 
-            for (let i = currentColumnFirstIndex; i < (boxesPerColumn + currentColumnFirstIndex - 1); i++) {
-                if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + 1].getSymbol() === null) {
-                    currentColumnFirstIndex += boxesPerColumn;
+            for (let i = currentColumnFirstIndex; i < (boxesPerColumn * (boxesPerColumn - 1) + currentColumnFirstIndex); i += boxesPerColumn) {
+                if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + boxesPerColumn].getSymbol() === null) {
+                    currentColumnFirstIndex++;
                     break;
                 }
-                else if (gameBoardBoxes[i].getSymbol() !== gameBoardBoxes[i + 1].getSymbol()) {
-                    currentColumnFirstIndex += boxesPerColumn;
+                else if (gameBoardBoxes[i].getSymbol() !== gameBoardBoxes[i + boxesPerColumn].getSymbol()) {
+                    currentColumnFirstIndex++;
                     break;
                 } else {
                     symbolsMatched++;

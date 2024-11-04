@@ -35,20 +35,44 @@ const gameBoard = (function() {
                     symbolsMatched++;
                 }
             }
-
             if (symbolsMatched === (boxesPerRow - 1)) {
                 return true;
             }
-
             countRowsLeft--;
         }
+        return false;
+    }
+    const checkColumnWin = () => {
+        const boxesPerColumn = Math.sqrt(gameBoardBoxes.length);
+        let countColumnsLeft = boxesPerColumn;
+        let currentColumnFirstIndex = 0;
+ 
+        while (countColumnsLeft > 0) {
+            let symbolsMatched = 0;
 
+            for (let i = currentColumnFirstIndex; i < (boxesPerColumn + currentColumnFirstIndex - 1); i++) {
+                if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + 1].getSymbol() === null) {
+                    currentColumnFirstIndex += boxesPerColumn;
+                    break;
+                }
+                else if (gameBoardBoxes[i].getSymbol() !== gameBoardBoxes[i + 1].getSymbol()) {
+                    currentColumnFirstIndex += boxesPerColumn;
+                    break;
+                } else {
+                    symbolsMatched++;
+                }
+            }
+            if (symbolsMatched === (boxesPerColumn - 1)) {
+                return true;
+            }
+            countColumnsLeft--;
+        }
         return false;
     }
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol, getGameBoard, checkRowWin } 
+    return { changeBoxSymbol, getGameBoard, checkRowWin, checkColumnWin } 
 })();
 
 function createPlayer(name, symbol) {

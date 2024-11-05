@@ -21,18 +21,22 @@ body {
     justify-content: center;
     align-items: center;
     width: min(500px, 85%);
-    row-gap: 45px;
+    row-gap: 35px;
 }
 
 .player-container {
     display: flex;
     width: 100%;
     justify-content: space-around;
+    align-items: center;
+    flex-flow: row wrap;
     font-size: 2rem;
+    row-gap: 20px;
+    column-gap: 30px;
 }
 
 span.score {
-    padding: 0 20px;
+    padding: 0 0 0 10px;
 }
 
 /* Gameboard Grid */

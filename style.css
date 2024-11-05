@@ -15,6 +15,20 @@ body {
     align-items: center;
 }
 
+.game-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: min(500px, 85%);
+}
+
+.player-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+}
+
 /* Gameboard Grid */
 
 .gameboard-grid {
@@ -22,7 +36,7 @@ body {
     aspect-ratio: 1 / 1;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: min(500px, 85%);
+    width: 100%;
 }
 
 .grid-boxes {
@@ -44,6 +58,10 @@ body {
 .gameboard-grid div:nth-child(3n - 5) {
     border-left: none;
 }
+
+/* Players */
+
+
 
 
 

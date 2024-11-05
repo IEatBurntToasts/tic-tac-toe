@@ -1,3 +1,7 @@
+const displayController = (function() {
+    ;
+});
+
 const gameManager = (function() {
     const createGamers = (p1Name, p1Symbol, p2Name, p2Symbol) => {
         const p1 = createPlayer(p1Name, p1Symbol);

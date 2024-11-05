@@ -16,6 +16,8 @@ body {
     align-items: center;
 }
 
+/* Gameboard Grid */
+
 .gameboard-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -26,7 +28,23 @@ body {
 }
 
 .grid-boxes {
-    border: 1px solid black;
+    border: 3px solid black;
+}
+
+.gameboard-grid div:nth-child(n + 7) {
+    border-bottom: none;
+}
+
+.gameboard-grid div:nth-child(-n + 3) {
+    border-top: none;
+}
+
+.gameboard-grid div:nth-child(3n) {
+    border-right: none;
+}
+
+.gameboard-grid div:nth-child(3n - 5) {
+    border-left: none;
 }
 
 

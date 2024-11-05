@@ -21,6 +21,7 @@ body {
     justify-content: center;
     align-items: center;
     width: min(500px, 85%);
+    row-gap: 40px;
 }
 
 .player-container {

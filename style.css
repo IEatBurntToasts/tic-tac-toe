@@ -4,14 +4,13 @@
     padding: 0;
 }
 
-html {
-    min-height: 100%;
+html,
+body {
+    height: 100%;
 }
 
 body {
     display: flex;
-    min-width: 100vw;
-    min-height: 100vh;
     justify-content: center;
     align-items: center;
 }
@@ -20,11 +19,10 @@ body {
 
 .gameboard-grid {
     display: grid;
+    aspect-ratio: 1 / 1;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: 500px;
-    height: 500px;
-    min-height: min(500px, 80%);
+    width: min(500px, 85%);
 }
 
 .grid-boxes {

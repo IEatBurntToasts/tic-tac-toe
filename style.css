@@ -17,10 +17,10 @@ body {
 }
 
 h1 {
-    font-size: min(8rem, 10vw);
+    font-size: min(7rem, 10vw);
     text-align: center;
     width: min(700px, 80%);
-    padding: clamp(5vw,30px,5rem) 0;
+    padding: clamp(3vw,30px,5rem) 0;
 }
 
 .game-container {

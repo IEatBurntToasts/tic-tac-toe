@@ -27,6 +27,7 @@ body {
     display: flex;
     width: 100%;
     justify-content: space-around;
+    font-size: 1.6rem;
 }
 
 /* Gameboard Grid */

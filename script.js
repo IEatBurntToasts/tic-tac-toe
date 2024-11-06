@@ -1,3 +1,12 @@
+const restartButton = document.querySelector('.restart');
+const settingsButton = document.querySelector('.settings');
+const themeButton = document.querySelector('.theme-mode');
+const modal = document.querySelector('.modal');
+
+restartButton.addEventListener('click', () => {
+    modal.showModal();
+});
+
 const displayController = (function() {
     ;
 });

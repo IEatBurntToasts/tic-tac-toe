@@ -2,11 +2,13 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    letter-spacing: 1px;
 }
 
 html {
     height: 100%;
     position: relative;
+    font-family: 'Steve', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
@@ -15,6 +17,16 @@ body {
     justify-content: flex-start;
     align-items: center;
     height: 100%;
+}
+
+@font-face {
+    font-family: Steve;
+    src: url(./fonts/Steve.ttf);
+}
+
+h1,
+h2 {
+    letter-spacing: 5px;
 }
 
 h1 {

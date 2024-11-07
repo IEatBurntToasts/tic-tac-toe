@@ -5,6 +5,13 @@
     letter-spacing: 1px;
 }
 
+:root {
+    --form-focus-outline: 2px solid #000000;
+    --form-input-border-def: none;
+    --form-input-outline-def: transparent;
+    --form-container-padding: 1.2rem;
+}
+
 html {
     height: 100%;
     position: relative;
@@ -129,28 +136,24 @@ span.score {
 }
 
 .modal h2 {
-    padding: 10px;
+    padding-top: var(--form-container-padding);
     font-size: 2rem;
 }
 
 form {
-    --form-focus-outline: 2px solid #000000;
-    --input-border-def: none;
-    --input-outline-def: transparent;
-
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
-    padding: 1.2rem;
+    padding: var(--form-container-padding);
     gap: 1rem;
     font-size: 1.4rem;
 }
 
 input,
 select {
-    border: var(--input-border-def);
-    outline: var(--input-outline-def);
+    border: var(--form-input-border-def);
+    outline: var(--form-input-outline-def);
 }
 
 input[type="text"],
@@ -183,12 +186,13 @@ form button {
     width: 80%;
     align-self: center;
     margin: 10px;
-    padding: 7px 10px;
+    padding: 7px 0px;
     border-radius: 10px;
     border: none;
     outline: transparent;
     background-color: #ffffff;
     transition: 0.1s ease-in-out background-color;
+    font-size: 1.65rem;
 }
 
 form button:hover {

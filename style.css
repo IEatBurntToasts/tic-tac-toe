@@ -116,6 +116,8 @@ span.score {
 }
 
 form {
+    --form-focus-outline: 2px solid black;
+
     flex: 1;
     display: flex;
     flex-flow: column nowrap;
@@ -136,5 +138,25 @@ input[type="number"] {
 
 input[type="text"]:focus,
 input[type="number"]:focus {
-    outline: 2px solid #000000;
+    outline: var(--form-focus-outline);
+}
+
+form button {
+    width: 80%;
+    align-self: center;
+    margin: 10px;
+    padding: 7px 10px;
+    border-radius: 10px;
+    border: none;
+    outline: transparent;
+    background-color: #ffffff;
+    transition: 0.2s ease-in-out background-color;
+}
+
+form button:focus {
+    outline: var(--form-focus-outline);
+}
+
+form button:hover {
+    background-color: #d3d3d3;
 }

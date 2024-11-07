@@ -1,15 +1,18 @@
-const restartButton = document.querySelector('.restart');
-const settingsButton = document.querySelector('.settings');
-const themeButton = document.querySelector('.theme-mode');
-const modal = document.querySelector('.modal');
-
-restartButton.addEventListener('click', () => {
-    modal.showModal();
-});
-
 const displayController = (function() {
-    ;
-});
+    const resetScoreButton = document.querySelector('.reset-score');
+    const settingsButton = document.querySelector('.settings');
+    const themeButton = document.querySelector('.theme-mode');
+    const modal = document.querySelector('.modal');
+    const overlay = document.querySelector('.overlay');
+
+    window.onload = () => {
+        modal.classList.add('active');
+    }
+
+    overlay.addEventListener('click', () => {
+        modal.classList.remove('active');
+    });
+})();
 
 const gameManager = (function() {
     const createGamers = (p1Name, p1Symbol, p2Name, p2Symbol) => {
@@ -18,7 +21,7 @@ const gameManager = (function() {
 
         return { p1, p2 }
     }
-});
+})();
 
 const gameBoard = (function() {
     let gameBoardBoxes = [];

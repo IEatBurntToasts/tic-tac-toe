@@ -29,7 +29,7 @@ const gameManager = (function() {
     settingsButton.addEventListener('click', () => {
         modal.classList.add('active');
     });
-    form.addEventListener('submit', () => {
+    form.addEventListener('submit', (event) => {
         const p1Name = document.getElementById('p1-name').value;
         const p2Name = document.getElementById('p2-name').value;
         const pointsToWin = document.getElementById('win-count').value;
@@ -38,7 +38,9 @@ const gameManager = (function() {
 
         processFormSubmit(p1Name, p2Name, pointsToWin, botSelect, botDifficulty);
         modal.classList.remove('active');
+        event.preventDefault();
     });
+
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
         displayController.updateName('p1', p1Name);
         displayController.updateName('p2', p2Name);

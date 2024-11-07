@@ -1,10 +1,8 @@
 const displayController = (function() {
     const updateName = (player, name) => {
-        if (name !== '') {
-            const playerElement = document.querySelector(`.${player}`);
+        const playerElement = document.querySelector(`.${player} p`);
 
-            playerElement.textContent = name;
-        }
+        playerElement.textContent = name;
     }
 
     return { updateName }
@@ -42,8 +40,16 @@ const gameManager = (function() {
     });
 
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
-        displayController.updateName('p1', p1Name);
-        displayController.updateName('p2', p2Name);
+        updateName('p1', p1Name);
+        updateName('p2', p2Name);
+    }
+    const updateName = (player, name) => {
+        const playerObj = (player === 'p1') ? p1 : p2;
+
+        if (name !== '') {
+            playerObj.changeName(name);
+            displayController.updateName(player, name);
+        }
     }
 })();
 

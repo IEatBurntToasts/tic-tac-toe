@@ -172,6 +172,30 @@ select:focus-visible {
     outline: var(--form-focus-outline);
 }
 
+.ai-enable {
+    display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 12px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+    width: 1em;
+    height: 1em;
+    background-color: #ffffff;
+    border: 3px solid #000000;
+    border-radius: 4px;
+    transform: translateY(-2px);
+}
+
+input[type="checkbox"]:focus-visible {
+    outline: 3px solid #000000;
+    outline-offset: 3px;
+}
+
 .ai-difficulty {
     display: flex;
     flex-flow: row wrap;

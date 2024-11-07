@@ -8,10 +8,12 @@ const displayController = (function() {
     window.onload = () => {
         modal.classList.add('active');
     }
-
     overlay.addEventListener('click', () => {
         modal.classList.remove('active');
     });
+    settingsButton.addEventListener('click', () => {
+        modal.classList.add('active');
+    })
 })();
 
 const gameManager = (function() {

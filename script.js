@@ -25,6 +25,17 @@ const displayController = (function() {
         processFormSubmit(p1Name, p2Name, pointsToWin, botSelect, botDifficulty);
         modal.classList.remove('active');
     });
+    const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
+        updateName('p1', p1Name);
+        updateName('p2', p2Name);
+    }
+    const updateName = (player, name) => {
+        if (name !== '') {
+            const playerElement = document.querySelector(`${player}-name`);
+
+            playerElement.textContent = name;
+        }
+    }
 })();
 
 const gameManager = (function() {

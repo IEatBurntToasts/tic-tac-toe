@@ -131,5 +131,10 @@ input[type="number"] {
     padding-left: 10px;
     border-radius: 7px;
     border: none;
-    outline: none;
+    outline: transparent;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: 2px solid #000000;
 }

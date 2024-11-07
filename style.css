@@ -159,7 +159,7 @@ form button {
     transition: 0.1s ease-in-out background-color;
 }
 
-form button:focus {
+form button:focus-visible {
     outline: var(--form-focus-outline);
 }
 

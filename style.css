@@ -175,6 +175,10 @@ select:focus-visible {
     gap: 5px;
 }
 
+select#ai-difficulty {
+    border-radius: 4px;
+}
+
 form button {
     width: 80%;
     align-self: center;

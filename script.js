@@ -1,10 +1,24 @@
 const displayController = (function() {
+    const updateName = (player, name) => {
+        if (name !== '') {
+            const playerElement = document.querySelector(`.${player}`);
+
+            playerElement.textContent = name;
+        }
+    }
+
+    return { updateName }
+})();
+
+const gameManager = (function() {
     const resetScoreButton = document.querySelector('.reset-score');
     const settingsButton = document.querySelector('.settings');
     const themeButton = document.querySelector('.theme-mode');
     const modal = document.querySelector('.modal');
     const overlay = document.querySelector('.overlay');
     const form = document.querySelector('form');
+    const p1 = createPlayer('Player 1', 'X');
+    const p2 = createPlayer('Player 2', 'O');
 
     window.onload = () => {
         modal.classList.add('active');
@@ -26,24 +40,8 @@ const displayController = (function() {
         modal.classList.remove('active');
     });
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
-        updateName('p1', p1Name);
-        updateName('p2', p2Name);
-    }
-    const updateName = (player, name) => {
-        if (name !== '') {
-            const playerElement = document.querySelector(`.${player}`);
-
-            playerElement.textContent = name;
-        }
-    }
-})();
-
-const gameManager = (function() {
-    const createGamers = (p1Name, p1Symbol, p2Name, p2Symbol) => {
-        const p1 = createPlayer(p1Name, p1Symbol);
-        const p2 = createPlayer(p2Name, p2Symbol);
-
-        return { p1, p2 }
+        displayController.updateName('p1', p1Name);
+        displayController.updateName('p2', p2Name);
     }
 })();
 
@@ -185,7 +183,7 @@ function createTicTacToeBox(positionNumber) {
     const getSymbol = () => symbol;
 
     return { getPositionNumber, changeSymbol, getSymbol }
-};
+}
 
 
 

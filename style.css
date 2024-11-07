@@ -123,6 +123,8 @@ span.score {
 
 form {
     --form-focus-outline: 2px solid #000000;
+    --input-border-def: none;
+    --input-outline-def: transparent;
 
     flex: 1;
     display: flex;
@@ -133,17 +135,24 @@ form {
     font-size: 1.25rem;
 }
 
+input,
+select {
+    border: var(--input-border-def);
+    outline: var(--input-outline-def);
+}
+
 input[type="text"],
 input[type="number"] {
     padding: 5px;
     padding-left: 10px;
     border-radius: 7px;
-    border: none;
-    outline: transparent;
 }
 
-input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="text"]:focus-visible,
+input[type="number"]:focus-visible,
+input[type="checkbox"]:focus-visible,
+form button:focus-visible,
+select:focus-visible {
     outline: var(--form-focus-outline);
 }
 
@@ -157,10 +166,6 @@ form button {
     outline: transparent;
     background-color: #ffffff;
     transition: 0.1s ease-in-out background-color;
-}
-
-form button:focus-visible {
-    outline: var(--form-focus-outline);
 }
 
 form button:hover {

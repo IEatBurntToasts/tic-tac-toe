@@ -4,6 +4,7 @@ const displayController = (function() {
     const themeButton = document.querySelector('.theme-mode');
     const modal = document.querySelector('.modal');
     const overlay = document.querySelector('.overlay');
+    const form = document.querySelector('form');
 
     window.onload = () => {
         modal.classList.add('active');
@@ -13,7 +14,17 @@ const displayController = (function() {
     });
     settingsButton.addEventListener('click', () => {
         modal.classList.add('active');
-    })
+    });
+    form.addEventListener('submit', () => {
+        const p1Name = document.getElementById('p1-name').value;
+        const p2Name = document.getElementById('p2-name').value;
+        const pointsToWin = document.getElementById('win-count').value;
+        const botSelect = document.getElementById('ai-enable').checked;
+        const botDifficulty = document.getElementById('ai-difficulty').value;
+
+        processFormSubmit(p1Name, p2Name, pointsToWin, botSelect, botDifficulty);
+        modal.classList.remove('active');
+    });
 })();
 
 const gameManager = (function() {

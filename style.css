@@ -95,8 +95,10 @@ h1 {
     column-gap: 30px;
 }
 
-span.score {
-    padding: 0 0 0 10px;
+.player {
+    display: flex;
+    flex-flow: row nowrap;
+    column-gap: 0.5em;
 }
 
 /* Button Group */

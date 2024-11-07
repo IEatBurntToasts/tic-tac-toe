@@ -31,7 +31,7 @@ const displayController = (function() {
     }
     const updateName = (player, name) => {
         if (name !== '') {
-            const playerElement = document.querySelector(`${player}-name`);
+            const playerElement = document.querySelector(`.${player}`);
 
             playerElement.textContent = name;
         }

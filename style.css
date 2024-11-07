@@ -144,11 +144,6 @@ dialog {
     z-index: 1;
 }
 
-dialog::backdrop {
-    background-color: red;
-    opacity: 1;
-}
-
 dialog h2 {
     padding-top: var(--form-container-padding);
     font-size: 2rem;
@@ -246,10 +241,14 @@ form button {
     border: none;
     outline: transparent;
     background-color: #ffffff;
-    transition: 0.1s ease-in-out background-color;
+    transition: 0.1s ease-in-out box-shadow;
     font-size: 1.65rem;
 }
 
 form button:hover {
-    background-color: #ececec;
+    box-shadow: 0 10px 20px #00000033;
+}
+
+form button:active {
+    box-shadow: 0 5px 10px #00000033;
 }

@@ -12,15 +12,23 @@ const displayController = (function() {
         box.classList.add('active');
     }
 
-    const restartDisplay = () => {
-        ;
+    const restartGameBoardDisplay = () => {
+        const p1ScoreElement = document.querySelector('.score.p1');
+        const p2ScoreElement = document.querySelector('.score.p2');
+        const gridBoxElements = document.querySelectorAll('.grid-boxes')
+
+        p1ScoreElement.textContent = 0;
+        p2ScoreElement.textContent = 0;
+
+        gridBoxElements.forEach((box) => {
+            const boxSpan = box.querySelector('span');
+
+            boxSpan.classList.remove('active');
+            boxSpan.textContent = '';
+        });
     }
 
-    const resetDisplayScore = (playerElement) => {
-        playerElement.
-    }
-
-    return { updateName, updateBoxSymbol, restartDisplay }
+    return { updateName, updateBoxSymbol, restartGameBoardDisplay }
 })();
 
 const gameManager = (function() {
@@ -42,6 +50,10 @@ const gameManager = (function() {
     });
     settingsButton.addEventListener('click', () => {
         modal.classList.add('active');
+    });
+    restartButton.addEventListener('click', () => {
+        playerTurn = 'p1';
+        gameBoardManager.restartGameBoard();
     });
     form.addEventListener('submit', (event) => {
         const p1Name = document.getElementById('p1-name').value;
@@ -69,15 +81,8 @@ const gameManager = (function() {
             displayController.updateName(player, name);
         }
     }
-    const processBoxInput = (boxPositionNumber, symbol) => {
-        if (gameBoard.checkBoxAvailable(boxPositionNumber)) {
-            gameBoard.changeBoxSymbol(boxPositionNumber, symbol);
-            displayController.updateBoxSymbol(boxPositionNumber, symbol);
-            switchPlayerTurn();
-        }
-    }
 
-    return { getPlayerTurn, processBoxInput }
+    return { getPlayerTurn, switchPlayerTurn }
 })();
 
 const gameBoardManager = (function() {
@@ -87,9 +92,23 @@ const gameBoardManager = (function() {
         box.addEventListener('click', () => {
             const playerTurnSymbol = (gameManager.getPlayerTurn() === 'p1') ? 'X' : 'O';
             
-            gameManager.processBoxInput(box.getAttribute('data-pos'), playerTurnSymbol);
+            processBoxInput(box.getAttribute('data-pos'), playerTurnSymbol);
         });
     });
+
+    const processBoxInput = (boxPositionNumber, symbol) => {
+        if (gameBoard.checkBoxAvailable(boxPositionNumber)) {
+            gameBoard.changeBoxSymbol(boxPositionNumber, symbol);
+            displayController.updateBoxSymbol(boxPositionNumber, symbol);
+            gameManager.switchPlayerTurn();
+        }
+    }
+    const restartGameBoard = () => {
+        gameBoard.restartGameBoard();
+        displayController.restartGameBoardDisplay();
+    }
+
+    return { restartGameBoard }
 })();
 
 const gameBoard = (function() {
@@ -204,10 +223,13 @@ const gameBoard = (function() {
         const diagWin = checkDiagWin();
         return { rowWin, colWin, diagWin };
     }
+    const restartGameBoard = () => {
+        gameBoardBoxes.forEach((box) => {
+            box.changeSymbol(null);
+        });
+    }
 
-    const getGameBoard = () => gameBoardBoxes;
-
-    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, getGameBoard, checkWin } 
+    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, restartGameBoard } 
 })();
 
 function createPlayer(name, symbol) {

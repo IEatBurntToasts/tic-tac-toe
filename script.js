@@ -233,17 +233,17 @@ const gameBoard = (function() {
 })();
 
 function createPlayer(name, symbol) {
-    let wins = 0;
+    let score = 0;
 
     const getName = () => name;
     const getSymbol = () => symbol;
-    const getWins = () => wins;
+    const getScore = () => score;
     const changeName = (newName) => name = newName;
     const changeSymbol = (newSymbol) => symbol = newSymbol;
-    const addWin = () => wins++;
-    const resetWins = () => wins = 0;
+    const addScore = () => score++;
+    const resetScore = () => score = 0;
 
-    return { getName, getSymbol, getWins, changeName, changeSymbol, addWin, resetWins }
+    return { getName, getSymbol, getScore, changeName, changeSymbol, addScore, resetScore }
 }
 
 function createTicTacToeBox(positionNumber) {

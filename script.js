@@ -16,6 +16,10 @@ const displayController = (function() {
         ;
     }
 
+    const resetDisplayScore = (playerElement) => {
+        playerElement.
+    }
+
     return { updateName, updateBoxSymbol, restartDisplay }
 })();
 
@@ -215,8 +219,9 @@ function createPlayer(name, symbol) {
     const changeName = (newName) => name = newName;
     const changeSymbol = (newSymbol) => symbol = newSymbol;
     const addWin = () => wins++;
+    const resetWins = () => wins = 0;
 
-    return { getName, getSymbol, getWins, changeName, changeSymbol, addWin }
+    return { getName, getSymbol, getWins, changeName, changeSymbol, addWin, resetWins }
 }
 
 function createTicTacToeBox(positionNumber) {

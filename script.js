@@ -105,6 +105,7 @@ const gameBoardManager = (function() {
             const playerTurnSymbol = (gameManager.getPlayerTurn() === 'p1') ? 'X' : 'O';
             
             processBoxInput(box.getAttribute('data-pos'), playerTurnSymbol);
+            checkWin();
         });
     });
 
@@ -118,6 +119,12 @@ const gameBoardManager = (function() {
     const restartGameBoard = () => {
         gameBoard.restartGameBoard();
         displayController.restartGameBoard();
+    }
+    const checkWin = () => {
+        const check = gameBoard.checkWin();
+        const checkRow = check.rowWin;
+        const checkColumn = check.colWin;
+        const checkDiag = check.diagWin;
     }
 
     return { restartGameBoard }

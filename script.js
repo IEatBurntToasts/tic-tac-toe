@@ -4,15 +4,13 @@ const displayController = (function() {
 
         playerElement.textContent = name;
     }
-
     const updateBoxSymbol = (boxPositionNumber, symbol) => {
         const box = document.querySelector(`[data-pos='${boxPositionNumber}'] span`);
 
         box.textContent = symbol;
         box.classList.add('active');
     }
-
-    const restartGameBoardDisplay = () => {
+    const restartGameBoard = () => {
         const p1ScoreElement = document.querySelector('.score.p1');
         const p2ScoreElement = document.querySelector('.score.p2');
         const gridBoxElements = document.querySelectorAll('.grid-boxes')
@@ -27,8 +25,15 @@ const displayController = (function() {
             boxSpan.textContent = '';
         });
     }
+    const resetScore = () => {
+        const p1Score = document.querySelector('.score.p1');
+        const p2Score = document.querySelector('.score.p2');
 
-    return { updateName, updateBoxSymbol, restartGameBoardDisplay }
+        p1Score.textContent = 0;
+        p2Score.textContent = 0;
+    }
+
+    return { updateName, updateBoxSymbol, restartGameBoard, resetScore }
 })();
 
 const gameManager = (function() {
@@ -52,7 +57,8 @@ const gameManager = (function() {
         modal.classList.add('active');
     });
     restartButton.addEventListener('click', () => {
-        playerTurn = 'p1';
+        resetPlayerTurn();
+        resetScore();
         gameBoardManager.restartGameBoard();
     });
     form.addEventListener('submit', (event) => {
@@ -81,6 +87,12 @@ const gameManager = (function() {
             displayController.updateName(player, name);
         }
     }
+    const resetScore = () => {
+        p1.resetScore();
+        p2.resetScore();
+        displayController.resetScore();
+    }
+    const resetPlayerTurn = () => playerTurn = 'p1';
 
     return { getPlayerTurn, switchPlayerTurn }
 })();
@@ -105,7 +117,7 @@ const gameBoardManager = (function() {
     }
     const restartGameBoard = () => {
         gameBoard.restartGameBoard();
-        displayController.restartGameBoardDisplay();
+        displayController.restartGameBoard();
     }
 
     return { restartGameBoard }

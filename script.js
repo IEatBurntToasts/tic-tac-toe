@@ -62,8 +62,6 @@ const gameManager = (function() {
     const form = document.querySelector('form');
     const p1 = createPlayer('Player 1', 'X');
     const p2 = createPlayer('Player 2', 'O');
-    const p1ScoreElement = document.querySelector('.score.p1');
-    const p2ScoreElement = document.querySelector('.score.p2');
     let playerTurn = 'p1';
     let pointsToWin = 0;
 
@@ -132,6 +130,12 @@ const gameManager = (function() {
 
         winner.addScore();
         displayController.displayWin(winIndexes, winnerStr);
+
+        if (winner.addScore() >= pointsToWin && pointsToWin > 0) {
+            const gameWinModal = document.querySelector('modal.game-win');
+
+            gameWinModal.classList.add('active');
+        }
     }
 
     return { getPlayerTurn, switchPlayerTurn, processWin }

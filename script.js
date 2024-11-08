@@ -12,11 +12,15 @@ const displayController = (function() {
         box.classList.add('active');
     }
 
-    return { updateName, updateBoxSymbol }
+    const restartDisplay = () => {
+        ;
+    }
+
+    return { updateName, updateBoxSymbol, restartDisplay }
 })();
 
 const gameManager = (function() {
-    const resetScoreButton = document.querySelector('.reset-score');
+    const restartButton = document.querySelector('.restart');
     const settingsButton = document.querySelector('.settings');
     const themeButton = document.querySelector('.theme-mode');
     const modal = document.querySelector('.modal');

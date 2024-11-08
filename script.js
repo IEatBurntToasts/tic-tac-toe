@@ -108,9 +108,15 @@ const gameManager = (function() {
             displayController.updateName(player, name);
         }
     }
-    const updatePointsToWin = (newPointsToWin) => {
-        if (newPointsToWin > 0 && (newPointsToWin !== pointsToWin)) {
-            ;
+    const updatePointsToWin = (pointsToWin) => {
+        const intPointsToWin = parseInt(pointsToWin);
+
+        if (intPointsToWin > 0 && (intPointsToWin !== pointsToWin)) {
+            pointsToWin = intPointsToWin;
+
+            if (p1.getScore() > intPointsToWin || p2.getScore > intPointsToWin) {
+                resetScore();
+            }
         }
     }
     const resetScore = () => {

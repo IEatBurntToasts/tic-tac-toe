@@ -5,7 +5,13 @@ const displayController = (function() {
         playerElement.textContent = name;
     }
 
-    return { updateName }
+    const updateBoxSymbol = (boxPositionNumber, symbol) => {
+        const box = document.querySelector(`[data-pos='${boxPositionNumber}']`);
+
+        box.textContent = symbol;
+    }
+
+    return { updateName, updateBoxSymbol }
 })();
 
 const gameManager = (function() {
@@ -17,6 +23,7 @@ const gameManager = (function() {
     const form = document.querySelector('form');
     const p1 = createPlayer('Player 1', 'X');
     const p2 = createPlayer('Player 2', 'O');
+    let playerTurn = 'p1';
 
     window.onload = () => {
         modal.classList.add('active');
@@ -39,6 +46,7 @@ const gameManager = (function() {
         event.preventDefault();
     });
 
+    const getPlayerTurn = () => playerTurn;
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
         updateName('p1', p1Name);
         updateName('p2', p2Name);
@@ -51,6 +59,25 @@ const gameManager = (function() {
             displayController.updateName(player, name);
         }
     }
+    const processPlayerInput = (boxPositionNumber, symbol) => {
+        if (gameBoard.checkBoxAvailable(boxPositionNumber)) {
+            gameBoard.changeBoxSymbol(boxPositionNumber, symbol);
+            displayController.updateBoxSymbol(boxPositionNumber, symbol);
+        }
+    }
+
+    return { getPlayerTurn, processPlayerInput }
+})();
+
+const gameBoardManager = (function() {
+    const gameBoardBoxes = document.querySelectorAll('.grid-boxes');
+    const playerTurnSymbol = (gameManager.getPlayerTurn() === 'p1') ? 'X' : 'O';
+
+    gameBoardBoxes.forEach((box) => {
+        box.addEventListener('click', () => {
+            gameManager.processPlayerInput(box.getAttribute('data-pos'), playerTurnSymbol);
+        });
+    });
 })();
 
 const gameBoard = (function() {
@@ -61,8 +88,10 @@ const gameBoard = (function() {
     }
 
     const getBox = (boxPositionNumber) => {
-        return gameBoardBoxes.find(({ positionNumber }) => {
-            return boxPositionNumber === positionNumber;
+        const intBoxPositionNumber = parseInt(boxPositionNumber);
+
+        return gameBoardBoxes.find((box) => {
+            return intBoxPositionNumber === box.getPositionNumber();
         });
     }
     const changeBoxSymbol = (boxPositionNumber, newSymbol) => {
@@ -71,6 +100,7 @@ const gameBoard = (function() {
         box.changeSymbol(newSymbol);
     }
     const getBoxSymbol = (boxPositionNumber) => gameBoardBoxes[boxPositionNumber].getSymbol();
+    const checkBoxAvailable = (boxPositionNumber) => getBoxSymbol(boxPositionNumber) === null;
     const checkRowWin = () => {
         const boxesPerRow = Math.sqrt(gameBoardBoxes.length);
         let winningSymbol;
@@ -165,7 +195,7 @@ const gameBoard = (function() {
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { changeBoxSymbol, getBoxSymbol, getGameBoard, checkWin } 
+    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, getGameBoard, checkWin, getBox } 
 })();
 
 function createPlayer(name, symbol) {

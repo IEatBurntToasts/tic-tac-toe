@@ -1,4 +1,6 @@
 const displayController = (function() {
+    const gameBoard = document.querySelector('.gameboard-grid');
+
     const updateName = (player, name) => {
         const playerElement = document.querySelector(`.${player} p`);
 
@@ -13,7 +15,7 @@ const displayController = (function() {
     const restartGameBoard = () => {
         const p1ScoreElement = document.querySelector('.score.p1');
         const p2ScoreElement = document.querySelector('.score.p2');
-        const gridBoxElements = document.querySelectorAll('.grid-boxes')
+        const gridBoxElements = document.querySelectorAll('.grid-boxes');
 
         p1ScoreElement.textContent = 0;
         p2ScoreElement.textContent = 0;
@@ -25,6 +27,9 @@ const displayController = (function() {
             boxSpan.classList.remove('highlight');
             boxSpan.textContent = '';
         });
+
+        gameBoard.classList.remove('disabled');
+        gameWinModal.classList.remove('active');
     }
     const resetScore = () => {
         const p1Score = document.querySelector('.score.p1');
@@ -48,9 +53,15 @@ const displayController = (function() {
         }
 
         addScore(winner);
+        gameBoard.classList.add('disabled');
+    }
+    const displayGameWin = () => {
+        const gameWinModal = document.querySelector('.modal.game-win');
+
+        gameWinModal.classList.add('active');
     }
 
-    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin }
+    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayGameWin }
 })();
 
 const gameManager = (function() {
@@ -132,9 +143,7 @@ const gameManager = (function() {
         displayController.displayWin(winIndexes, winnerStr);
 
         if (winner.addScore() >= pointsToWin && pointsToWin > 0) {
-            const gameWinModal = document.querySelector('modal.game-win');
-
-            gameWinModal.classList.add('active');
+            displayController.displayGameWin(winnerStr);
         }
     }
 
@@ -307,7 +316,7 @@ const gameBoard = (function() {
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, restartGameBoard, getGameBoard} 
+    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, restartGameBoard, getGameBoard } 
 })();
 
 function createPlayer(name, symbol) {

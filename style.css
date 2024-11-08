@@ -62,6 +62,10 @@ h1 {
     width: 100%;
 }
 
+.gameboard-grid.disabled {
+    pointer-events: none;
+}
+
 .grid-boxes {
     display: flex;
     justify-content: center;

@@ -89,6 +89,7 @@ const gameManager = (function() {
         const botDifficulty = document.getElementById('ai-difficulty').value;
 
         processFormSubmit(p1Name, p2Name, pointsToWin, botSelect, botDifficulty);
+        updatePointsToWin(pointsToWin);
         modal.classList.remove('active');
         event.preventDefault();
     });
@@ -114,7 +115,7 @@ const gameManager = (function() {
         if (intPointsToWin > 0 && (intPointsToWin !== pointsToWin)) {
             pointsToWin = intPointsToWin;
 
-            if (p1.getScore() > intPointsToWin || p2.getScore > intPointsToWin) {
+            if (p1.getScore() >= intPointsToWin || p2.getScore >= intPointsToWin) {
                 resetScore();
             }
         }

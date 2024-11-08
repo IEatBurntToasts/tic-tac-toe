@@ -22,6 +22,7 @@ const displayController = (function() {
             const boxSpan = box.querySelector('span');
 
             boxSpan.classList.remove('active');
+            boxSpan.classList.remove('highlight');
             boxSpan.textContent = '';
         });
     }
@@ -32,8 +33,24 @@ const displayController = (function() {
         p1Score.textContent = 0;
         p2Score.textContent = 0;
     }
+    const addScore = (winner) => {
+        const scoreElement = document.querySelector(`.player.${winner} span`);
 
-    return { updateName, updateBoxSymbol, restartGameBoard, resetScore }
+        scoreElement.textContent = parseInt(scoreElement.textContent) + 1;
+    }
+    const displayWin = (winningIndexes, winner) => {
+        const arrWinIndexes = Array.from(winningIndexes);
+
+        for (const index of arrWinIndexes) {
+            const boxSpanElement = document.querySelector(`[data-pos='${index}'] span`);
+
+            boxSpanElement.classList.add('highlight');
+        }
+
+        addScore(winner);
+    }
+
+    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin }
 })();
 
 const gameManager = (function() {
@@ -93,8 +110,15 @@ const gameManager = (function() {
         displayController.resetScore();
     }
     const resetPlayerTurn = () => playerTurn = 'p1';
+    const processWin = (winIndexes, winSymbol) => {
+        const winner = (winSymbol === 'X') ? p1 : p2;
+        const winnerStr = (winner === p1) ? 'p1' : 'p2';
 
-    return { getPlayerTurn, switchPlayerTurn }
+        winner.addScore();
+        displayController.displayWin(winIndexes, winnerStr);
+    }
+
+    return { getPlayerTurn, switchPlayerTurn, processWin }
 })();
 
 const gameBoardManager = (function() {
@@ -122,9 +146,22 @@ const gameBoardManager = (function() {
     }
     const checkWin = () => {
         const check = gameBoard.checkWin();
-        const checkRow = check.rowWin;
-        const checkColumn = check.colWin;
-        const checkDiag = check.diagWin;
+        const winIndexes = new Set();
+        let winSymbol;
+
+        for (const winObj in check) {
+            if (check[winObj]) {
+                for (const index of check[winObj].winningIndexes) {
+                    winIndexes.add(index);
+                }
+
+                winSymbol = check[winObj].winningSymbol;
+            }
+        }
+
+        if (winSymbol !== undefined) {
+            gameManager.processWin(winIndexes, winSymbol);
+        }
     }
 
     return { restartGameBoard }
@@ -248,7 +285,9 @@ const gameBoard = (function() {
         });
     }
 
-    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, restartGameBoard } 
+    const getGameBoard = () => gameBoardBoxes;
+
+    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, restartGameBoard, getGameBoard} 
 })();
 
 function createPlayer(name, symbol) {

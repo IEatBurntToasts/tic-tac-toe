@@ -79,6 +79,10 @@ h1 {
     transform: scale(1);
 }
 
+.grid-boxes span.active.highlight {
+    color: #75e475;
+}
+
 .gameboard-grid div:nth-child(n + 7) {
     border-bottom: none;
 }

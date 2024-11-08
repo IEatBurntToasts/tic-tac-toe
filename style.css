@@ -63,7 +63,20 @@ h1 {
 }
 
 .grid-boxes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 3px solid #000000;
+}
+
+.grid-boxes span {
+    transform: scale(0);
+    font-size: 5em;
+    transition: 70ms ease-in-out;
+}
+
+.grid-boxes span.active {
+    transform: scale(1);
 }
 
 .gameboard-grid div:nth-child(n + 7) {

@@ -6,9 +6,10 @@ const displayController = (function() {
     }
 
     const updateBoxSymbol = (boxPositionNumber, symbol) => {
-        const box = document.querySelector(`[data-pos='${boxPositionNumber}']`);
+        const box = document.querySelector(`[data-pos='${boxPositionNumber}'] span`);
 
         box.textContent = symbol;
+        box.classList.add('active');
     }
 
     return { updateName, updateBoxSymbol }

@@ -62,7 +62,10 @@ const gameManager = (function() {
     const form = document.querySelector('form');
     const p1 = createPlayer('Player 1', 'X');
     const p2 = createPlayer('Player 2', 'O');
+    const p1ScoreElement = document.querySelector('.score.p1');
+    const p2ScoreElement = document.querySelector('.score.p2');
     let playerTurn = 'p1';
+    let pointsToWin = 0;
 
     window.onload = () => {
         modal.classList.add('active');
@@ -95,6 +98,7 @@ const gameManager = (function() {
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
         updateName('p1', p1Name);
         updateName('p2', p2Name);
+        updatePointsToWin(pointsToWin);
     }
     const updateName = (player, name) => {
         const playerObj = (player === 'p1') ? p1 : p2;
@@ -102,6 +106,11 @@ const gameManager = (function() {
         if (name !== '') {
             playerObj.changeName(name);
             displayController.updateName(player, name);
+        }
+    }
+    const updatePointsToWin = (newPointsToWin) => {
+        if (newPointsToWin > 0 && (newPointsToWin !== pointsToWin)) {
+            ;
         }
     }
     const resetScore = () => {

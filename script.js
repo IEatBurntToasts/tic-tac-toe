@@ -47,6 +47,7 @@ const gameManager = (function() {
     });
 
     const getPlayerTurn = () => playerTurn;
+    const switchPlayerTurn = () => playerTurn = (playerTurn === 'p1') ? 'p2' : 'p1';
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
         updateName('p1', p1Name);
         updateName('p2', p2Name);
@@ -59,23 +60,25 @@ const gameManager = (function() {
             displayController.updateName(player, name);
         }
     }
-    const processPlayerInput = (boxPositionNumber, symbol) => {
+    const processBoxInput = (boxPositionNumber, symbol) => {
         if (gameBoard.checkBoxAvailable(boxPositionNumber)) {
             gameBoard.changeBoxSymbol(boxPositionNumber, symbol);
             displayController.updateBoxSymbol(boxPositionNumber, symbol);
+            switchPlayerTurn();
         }
     }
 
-    return { getPlayerTurn, processPlayerInput }
+    return { getPlayerTurn, processBoxInput }
 })();
 
 const gameBoardManager = (function() {
     const gameBoardBoxes = document.querySelectorAll('.grid-boxes');
-    const playerTurnSymbol = (gameManager.getPlayerTurn() === 'p1') ? 'X' : 'O';
 
     gameBoardBoxes.forEach((box) => {
         box.addEventListener('click', () => {
-            gameManager.processPlayerInput(box.getAttribute('data-pos'), playerTurnSymbol);
+            const playerTurnSymbol = (gameManager.getPlayerTurn() === 'p1') ? 'X' : 'O';
+            
+            gameManager.processBoxInput(box.getAttribute('data-pos'), playerTurnSymbol);
         });
     });
 })();
@@ -195,7 +198,7 @@ const gameBoard = (function() {
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, getGameBoard, checkWin, getBox } 
+    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, getGameBoard, checkWin } 
 })();
 
 function createPlayer(name, symbol) {

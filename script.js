@@ -128,7 +128,7 @@ const gameManager = (function() {
         if (intPointsToWin > 0 && (intPointsToWin !== pointsToWin)) {
             pointsToWin = intPointsToWin;
 
-            if (p1.getScore() <= intPointsToWin || p2.getScore() <= intPointsToWin) {
+            if (p1.getScore() >= intPointsToWin || p2.getScore() >= intPointsToWin) {
                 resetScore();
             }
         }
@@ -146,7 +146,7 @@ const gameManager = (function() {
         winner.addScore();
         displayController.displayWin(winIndexes, winnerStr);
 
-        if (winner.addScore() >= pointsToWin && pointsToWin > 0) {
+        if (winner.getScore() >= pointsToWin && pointsToWin > 0) {
             displayController.displayGameWin(winnerStr);
         }
     }

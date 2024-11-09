@@ -1,6 +1,7 @@
 const displayController = (function() {
     const gameBoard = document.querySelector('.gameboard-grid');
     const continueButton = document.querySelector('button.continue');
+    const gameWinModal = document.querySelector('.modal.game-win');
 
     const updateName = (player, name) => {
         const playerElement = document.querySelector(`.${player} p`);
@@ -26,7 +27,7 @@ const displayController = (function() {
 
         gameBoard.classList.remove('disabled');
         continueButton.classList.add('disabled');
-        // gameWinModal.classList.remove('active');
+        gameWinModal.classList.remove('active');
     }
     const resetScore = () => {
         const p1Score = document.querySelector('.score.p1');
@@ -54,9 +55,7 @@ const displayController = (function() {
         continueButton.classList.remove('disabled');
     }
     const displayGameWin = () => {
-        // const gameWinModal = document.querySelector('.modal.game-win');
-
-        // gameWinModal.classList.add('active');
+        gameWinModal.classList.add('active');
         continueButton.classList.add('disabled');
     }
 
@@ -122,8 +121,8 @@ const gameManager = (function() {
             displayController.updateName(player, name);
         }
     }
-    const updatePointsToWin = (pointsToWin) => {
-        const intPointsToWin = parseInt(pointsToWin);
+    const updatePointsToWin = (newPointsToWin) => {
+        const intPointsToWin = parseInt(newPointsToWin);
 
         if (intPointsToWin > 0 && (intPointsToWin !== pointsToWin)) {
             pointsToWin = intPointsToWin;

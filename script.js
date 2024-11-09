@@ -13,12 +13,7 @@ const displayController = (function() {
         box.classList.add('active');
     }
     const restartGameBoard = () => {
-        const p1ScoreElement = document.querySelector('.score.p1');
-        const p2ScoreElement = document.querySelector('.score.p2');
         const gridBoxElements = document.querySelectorAll('.grid-boxes');
-
-        p1ScoreElement.textContent = 0;
-        p2ScoreElement.textContent = 0;
 
         gridBoxElements.forEach((box) => {
             const boxSpan = box.querySelector('span');
@@ -67,6 +62,7 @@ const displayController = (function() {
 const gameManager = (function() {
     const restartButton = document.querySelector('.restart');
     const settingsButton = document.querySelector('.settings');
+    const continueButton = document.querySelector('.continue');
     const themeButton = document.querySelector('.theme-mode');
     const modal = document.querySelector('.modal');
     const overlay = document.querySelector('.overlay');
@@ -88,6 +84,10 @@ const gameManager = (function() {
     restartButton.addEventListener('click', () => {
         resetPlayerTurn();
         resetScore();
+        gameBoardManager.restartGameBoard();
+    });
+    continueButton.addEventListener(('click'), () => {
+        resetPlayerTurn();
         gameBoardManager.restartGameBoard();
     });
     form.addEventListener('submit', (event) => {

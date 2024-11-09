@@ -54,7 +54,18 @@ const displayController = (function() {
         gameBoard.classList.add('disabled');
         continueButton.classList.remove('disabled');
     }
-    const displayGameWin = () => {
+    const displayGameWin = (winner) => {
+        const p1ElementName = document.querySelector('.player.p1 p').textContent;
+        const p2ElementName = document.querySelector('.player.p2 p').textContent;
+        const p1Score = document.querySelector('.score.p1').textContent;
+        const p2Score = document.querySelector('.score.p2').textContent;
+        const winnerName = (winner === 'p1') ? p1ElementName : p2ElementName;
+        const winnerTextElement = gameWinModal.querySelector('.winner-text');
+        const winDetailsElement = gameWinModal.querySelector('.win-details');
+
+        winnerTextElement.textContent = `${winnerName} wins!`;
+        winDetailsElement.textContent = `${p1ElementName} ${p1Score} - ${p2Score} ${p2ElementName}`;
+
         gameWinModal.classList.add('active');
         continueButton.classList.add('disabled');
     }

@@ -257,7 +257,7 @@ input[type="checkbox"]::before {
     content: '';
     height: 1em;
     width: 1em;
-    box-shadow: inset 1em 1em black;
+    box-shadow: inset 1em 1em #000000;
     transform: scale(0);
     transition: 120ms ease-in-out;
     background-color: CanvasText;
@@ -298,4 +298,33 @@ form button:hover {
 
 form button:active {
     box-shadow: 0 5px 10px #00000033;
+}
+
+/* Game Win Modal */
+
+.win-text-container {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: var(--form-container-padding);
+    z-index: 1;
+    gap: 1.5rem;
+}
+
+.win-details {
+    font-size: 1.5rem;
+}
+
+.win-text-container button.restart {
+    padding: 10px 25px;
+    border-radius: 15px;
+    border: transparent;
+    font-size: 1.5rem;
+    transition: 0.2s ease-in-out;
+}
+
+.win-text-container button.restart:hover {
+    background-color: #e6e6e6;
 }

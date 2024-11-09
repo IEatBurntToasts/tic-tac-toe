@@ -302,6 +302,15 @@ const gameBoard = (function() {
             return false;
         }
     }
+    const checkTie = () => {
+        for (const box of gameBoardBoxes) {
+            if (box.getSymbol() === null) {
+                return false;
+            }
+        }
+
+        return true;
+    }
     const checkWin = () => {
         const rowWin = checkRowWin();
         const colWin = checkColumnWin();
@@ -316,7 +325,7 @@ const gameBoard = (function() {
 
     const getGameBoard = () => gameBoardBoxes;
 
-    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, restartGameBoard, getGameBoard } 
+    return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, checkTie, restartGameBoard, getGameBoard } 
 })();
 
 function createPlayer(name, symbol) {

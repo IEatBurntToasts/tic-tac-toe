@@ -146,7 +146,7 @@ h1 {
     background-color: #e6e6e6;
 }
 
-button.continue.disabled {
+.disabled {
     background-color: var(--background-color-disabled);
     color: var(--color-disabled);
     pointer-events: none;

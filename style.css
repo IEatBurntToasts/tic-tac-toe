@@ -45,12 +45,6 @@ h1 {
     width: min(700px, 80%);
 }
 
-.disabled {
-    background-color: var(--background-color-disabled);
-    color: var(--color-disabled);
-    pointer-events: none;
-}
-
 .game-container {
     display: flex;
     flex-flow: column nowrap;
@@ -150,6 +144,12 @@ h1 {
 
 .buttons-container button:hover {
     background-color: #e6e6e6;
+}
+
+button.continue.disabled {
+    background-color: var(--background-color-disabled);
+    color: var(--color-disabled);
+    pointer-events: none;
 }
 
 /* Modal & Overlay */

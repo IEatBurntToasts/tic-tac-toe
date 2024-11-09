@@ -1,5 +1,6 @@
 const displayController = (function() {
     const gameBoard = document.querySelector('.gameboard-grid');
+    const continueButton = document.querySelector('button.continue');
 
     const updateName = (player, name) => {
         const playerElement = document.querySelector(`.${player} p`);
@@ -24,7 +25,8 @@ const displayController = (function() {
         });
 
         gameBoard.classList.remove('disabled');
-        gameWinModal.classList.remove('active');
+        continueButton.classList.add('disabled');
+        // gameWinModal.classList.remove('active');
     }
     const resetScore = () => {
         const p1Score = document.querySelector('.score.p1');
@@ -49,11 +51,13 @@ const displayController = (function() {
 
         addScore(winner);
         gameBoard.classList.add('disabled');
+        continueButton.classList.remove('disabled');
     }
     const displayGameWin = () => {
-        const gameWinModal = document.querySelector('.modal.game-win');
+        // const gameWinModal = document.querySelector('.modal.game-win');
 
-        gameWinModal.classList.add('active');
+        // gameWinModal.classList.add('active');
+        continueButton.classList.add('disabled');
     }
 
     return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayGameWin }
@@ -292,15 +296,15 @@ const gameBoard = (function() {
                 const winningIndexes = [0,4,8];
                 return { winningSymbol, winningIndexes }
             }
-        } else if (gameBoardBoxes[2].getSymbol() !== null && gameBoardBoxes[4].getSymbol() !== null && gameBoardBoxes[6].getSymbol() !== null) {
+        }  
+        if (gameBoardBoxes[2].getSymbol() !== null && gameBoardBoxes[4].getSymbol() !== null && gameBoardBoxes[6].getSymbol() !== null) {
             if (gameBoardBoxes[2].getSymbol() === gameBoardBoxes[4].getSymbol() && gameBoardBoxes[4].getSymbol() === gameBoardBoxes[6].getSymbol()) {
                 const winningSymbol = gameBoardBoxes[2].getSymbol();
                 const winningIndexes = [2,4,6];
                 return { winningSymbol, winningIndexes }
             }
-        } else {
-            return false;
         }
+        return false;
     }
     const checkTie = () => {
         for (const box of gameBoardBoxes) {

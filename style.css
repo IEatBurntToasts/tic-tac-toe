@@ -11,6 +11,8 @@
     --form-input-outline-def: transparent;
     --form-container-padding: 1.2rem;
     --form-padding-left-def: 10px;
+    --background-color-disabled: #ececec;
+    --color-disabled: #c2bfbf;
 }
 
 html {
@@ -127,7 +129,8 @@ h1 {
 .buttons-container {
     display: flex;
     flex-flow: row wrap;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 20px;
     width: 100%;
 }
 
@@ -141,6 +144,12 @@ h1 {
 
 .buttons-container button:hover {
     background-color: #e6e6e6;
+}
+
+button.continue.disabled {
+    background-color: var(--background-color-disabled);
+    color: var(--color-disabled);
+    pointer-events: none;
 }
 
 /* Modal & Overlay */

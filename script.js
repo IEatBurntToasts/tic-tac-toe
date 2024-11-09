@@ -54,6 +54,9 @@ const displayController = (function() {
         gameBoard.classList.add('disabled');
         continueButton.classList.remove('disabled');
     }
+    const displayTie = () => {
+        continueButton.classList.remove('disabled');
+    }
     const displayGameWin = (winner) => {
         const p1ElementName = document.querySelector('.player.p1 p').textContent;
         const p2ElementName = document.querySelector('.player.p2 p').textContent;
@@ -80,7 +83,7 @@ const displayController = (function() {
         document.querySelector('.player.p2 p').classList.remove('turn');
     }
 
-    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayGameWin, switchPlayerTurn, resetPlayerTurn }
+    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayTie, displayGameWin, switchPlayerTurn, resetPlayerTurn }
 })();
 
 const gameManager = (function() {
@@ -227,6 +230,10 @@ const gameBoardManager = (function() {
 
         if (winSymbol !== undefined) {
             gameManager.processWin(winIndexes, winSymbol);
+        }
+
+        if (gameBoard.checkTie()) {
+            displayController.displayTie();
         }
     }
 

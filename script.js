@@ -69,8 +69,18 @@ const displayController = (function() {
         gameWinModal.classList.add('active');
         continueButton.classList.add('disabled');
     }
+    const switchPlayerTurn = (currentPlayerTurn) => {
+        const newPlayerTurn = (currentPlayerTurn === 'p1') ? 'p2' : 'p1';
 
-    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayGameWin }
+        document.querySelector(`.player.${currentPlayerTurn} p`).classList.remove('turn');
+        document.querySelector(`.player.${newPlayerTurn} p`).classList.add('turn');
+    }
+    const resetPlayerTurn = () => {
+        document.querySelector('.player.p1 p').classList.add('turn');
+        document.querySelector('.player.p2 p').classList.remove('turn');
+    }
+
+    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayGameWin, switchPlayerTurn, resetPlayerTurn }
 })();
 
 const gameManager = (function() {
@@ -83,6 +93,7 @@ const gameManager = (function() {
     const form = document.querySelector('form');
     const p1 = createPlayer('Player 1', 'X');
     const p2 = createPlayer('Player 2', 'O');
+    let matchPlayerTurn = 'p1';
     let playerTurn = 'p1';
     let pointsToWin = 0;
 
@@ -103,7 +114,7 @@ const gameManager = (function() {
         });
     });
     continueButton.addEventListener(('click'), () => {
-        resetPlayerTurn();
+        advancePlayerTurn();
         gameBoardManager.restartGameBoard();
     });
     form.addEventListener('submit', (event) => {
@@ -119,7 +130,10 @@ const gameManager = (function() {
     });
 
     const getPlayerTurn = () => playerTurn;
-    const switchPlayerTurn = () => playerTurn = (playerTurn === 'p1') ? 'p2' : 'p1';
+    const switchPlayerTurn = () => {
+        displayController.switchPlayerTurn(playerTurn);
+        playerTurn = (playerTurn === 'p1') ? 'p2' : 'p1';
+    } 
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
         updateName('p1', p1Name);
         updateName('p2', p2Name);
@@ -149,7 +163,15 @@ const gameManager = (function() {
         p2.resetScore();
         displayController.resetScore();
     }
-    const resetPlayerTurn = () => playerTurn = 'p1';
+    const resetPlayerTurn = () => {
+        playerTurn = 'p1';
+        displayController.resetPlayerTurn();
+    }
+    const advancePlayerTurn = () => {
+        displayController.switchPlayerTurn((playerTurn === 'p1') ? 'p2' : 'p1');
+        playerTurn = (matchPlayerTurn === 'p1') ? 'p2' : 'p1';
+        matchPlayerTurn = playerTurn;
+    }
     const processWin = (winIndexes, winSymbol) => {
         const winner = (winSymbol === 'X') ? p1 : p2;
         const winnerStr = (winner === p1) ? 'p1' : 'p2';

@@ -124,6 +124,14 @@ h1 {
     column-gap: 0.5em;
 }
 
+.player p {
+    transition: 70ms ease-in-out;
+}
+
+.player p.turn {
+    color: #90ee90;
+}
+
 /* Button Group */
 
 .buttons-container {

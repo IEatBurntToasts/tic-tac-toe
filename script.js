@@ -62,7 +62,6 @@ const displayController = (function() {
         const winnerName = (winner === 'p1') ? p1ElementName : p2ElementName;
         const winnerTextElement = gameWinModal.querySelector('.winner-text');
         const winDetailsElement = gameWinModal.querySelector('.win-details');
-        const hyphen = '&#8208;'
 
         winnerTextElement.textContent = `${winnerName} wins!`;
         winDetailsElement.textContent = `${p1ElementName} ${p1Score} — ${p2Score} ${p2ElementName}`;
@@ -75,7 +74,7 @@ const displayController = (function() {
 })();
 
 const gameManager = (function() {
-    const restartButton = document.querySelector('.restart');
+    const restartButtons = document.querySelectorAll('.restart');
     const settingsButton = document.querySelector('.settings');
     const continueButton = document.querySelector('.continue');
     const themeButton = document.querySelector('.theme-mode');
@@ -96,10 +95,12 @@ const gameManager = (function() {
     settingsButton.addEventListener('click', () => {
         modal.classList.add('active');
     });
-    restartButton.addEventListener('click', () => {
-        resetPlayerTurn();
-        resetScore();
-        gameBoardManager.restartGameBoard();
+    restartButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            resetPlayerTurn();
+            resetScore();
+            gameBoardManager.restartGameBoard();
+        });
     });
     continueButton.addEventListener(('click'), () => {
         resetPlayerTurn();
@@ -136,7 +137,7 @@ const gameManager = (function() {
     const updatePointsToWin = (newPointsToWin) => {
         const intPointsToWin = parseInt(newPointsToWin);
 
-        if (intPointsToWin > 0 && (intPointsToWin !== pointsToWin)) {
+        if (intPointsToWin !== pointsToWin) {
             pointsToWin = intPointsToWin;
 
             if (p1.getScore() >= intPointsToWin || p2.getScore() >= intPointsToWin) {

@@ -45,6 +45,12 @@ h1 {
     width: min(700px, 80%);
 }
 
+.disabled {
+    background-color: var(--background-color-disabled);
+    color: var(--color-disabled);
+    pointer-events: none;
+}
+
 .game-container {
     display: flex;
     flex-flow: column nowrap;
@@ -146,12 +152,6 @@ h1 {
     background-color: #e6e6e6;
 }
 
-.disabled {
-    background-color: var(--background-color-disabled);
-    color: var(--color-disabled);
-    pointer-events: none;
-}
-
 /* Modal & Overlay */
 
 .modal {
@@ -226,6 +226,12 @@ select:focus-visible {
 	flex-wrap: nowrap;
 	gap: 9px;
     padding-left: var(--form-padding-left-def);
+}
+
+.ai-enable:has(input[type="checkbox"]:not(:checked)) + .ai-difficulty select#ai-difficulty {
+    background-color: var(--background-color-disabled);
+    color: var(--color-disabled);
+    pointer-events: none;
 }
 
 input[type="checkbox"] {

@@ -128,7 +128,7 @@ const gameManager = (function() {
         if (intPointsToWin > 0 && (intPointsToWin !== pointsToWin)) {
             pointsToWin = intPointsToWin;
 
-            if (p1.getScore() >= intPointsToWin || p2.getScore() >= intPointsToWin) {
+            if (p1.getScore() <= intPointsToWin || p2.getScore() <= intPointsToWin) {
                 resetScore();
             }
         }

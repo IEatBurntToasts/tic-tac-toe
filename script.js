@@ -240,6 +240,10 @@ const gameBoardManager = (function() {
     return { restartGameBoard }
 })();
 
+const aiBot = (function() {
+    ;
+})();
+
 const gameBoard = (function() {
     let gameBoardBoxes = [];
 

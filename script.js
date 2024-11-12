@@ -240,8 +240,16 @@ const gameBoardManager = (function() {
     return { restartGameBoard }
 })();
 
-const aiBot = (function() {
-    ;
+const aiBot = (function(gameboard) {
+    let bestScore = -Infinity;
+    let optimalMove;
+
+    const findOptimalMove = () => {
+        ;
+    }
+    const minimax = () => {
+        ;
+    }
 })();
 
 const gameBoard = (function() {
@@ -370,7 +378,6 @@ const gameBoard = (function() {
             box.changeSymbol(null);
         });
     }
-
     const getGameBoard = () => gameBoardBoxes;
 
     return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, checkTie, restartGameBoard, getGameBoard } 

@@ -232,27 +232,12 @@ const gameBoardManager = (function() {
             gameManager.processWin(winIndexes, winSymbol);
         }
 
-        if (gameBoard.checkTie()) {
+        if (gameBoard.checkTie(gameBoard.getGameBoard())) {
             displayController.displayTie();
         }
     }
 
     return { restartGameBoard }
-})();
-
-const aiBot = (function(gameboard) {
-    let bestScore = -Infinity;
-    let optimalMove;
-
-    const findOptimalMove = () => {
-        ;
-    }
-    const minimax = () => {
-        ;
-    }
-    const terminal = (gameboardState) => {
-        ;
-    }
 })();
 
 const gameBoard = (function() {
@@ -361,8 +346,8 @@ const gameBoard = (function() {
         }
         return false;
     }
-    const checkTie = () => {
-        for (const box of gameBoardBoxes) {
+    const checkTie = (gameBoardBoxesArr) => {
+        for (const box of gameBoardBoxesArr) {
             if (box.getSymbol() === null) {
                 return false;
             }
@@ -384,6 +369,33 @@ const gameBoard = (function() {
     const getGameBoard = () => gameBoardBoxes;
 
     return { checkBoxAvailable, changeBoxSymbol, getBoxSymbol, checkWin, checkTie, restartGameBoard, getGameBoard } 
+})();
+
+const aiBotManager = (function() {
+    let bestScore = Infinity; // Bot will be minimizing player
+    let gameBoardCopy = gameBoard.getGameBoard().slice();
+
+    const findOptimalMove = () => {
+        ;
+    }
+    const minimax = () => {
+        ;
+    }
+    const terminal = (gameBoardState) => {
+        for (const [key, value] of Object.entries(gameBoard.checkWin(gameBoardState))) {
+            if (value !== false) {
+                const score = (value.winningSymbol === 'X') ? 1 : -1;
+
+                return score;
+            } else if (gameBoard.checkTie(gameBoardState)) {
+                return 0;
+            }
+        }
+
+        return false;
+    }
+
+    return { findOptimalMove, minimax, terminal }
 })();
 
 function createPlayer(name, symbol) {

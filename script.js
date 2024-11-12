@@ -374,12 +374,13 @@ const gameBoard = (function() {
 const aiBotManager = (function() {
     let bestScore = Infinity; // Bot will be minimizing player
     let gameBoardCopy = gameBoard.getGameBoard().slice();
+    const originalTurn = 'p1' // Bot will make a turn first to see if player can win on their turn
 
     const findOptimalMove = () => {
         ;
     }
-    const minimax = () => {
-        ;
+    const minimax = (gameBoardState, currentTurn) => {
+        ;        
     }
     const terminal = (gameBoardState) => {
         for (const [key, value] of Object.entries(gameBoard.checkWin(gameBoardState))) {
@@ -393,6 +394,22 @@ const aiBotManager = (function() {
         }
 
         return false;
+    }
+    const createNewBoardState = (currentGameBoardState, positionNumber, symbol) => {
+        const intPosNumber = parseInt(positionNumber);
+
+        return currentGameBoardState[intPosNumber].changeSymbol(symbol);
+    }
+    const availableMoves = (gameBoardState) => { // Ret. array of numbers for pos number of avail. boxes
+        let availablePositions = [];
+
+        for (const gameBoardBox in gameBoardState) {
+            if (gameBoardBox.getSymbol() === null) {
+                availablePositions.push(gameBoardBox.getPositionNumber());
+            }
+        }
+
+        return availablePositions;
     }
 
     return { findOptimalMove, minimax, terminal }

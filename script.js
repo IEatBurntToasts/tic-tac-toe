@@ -198,7 +198,7 @@ const gameBoardManager = (function() {
             const playerTurnSymbol = (gameManager.getPlayerTurn() === 'p1') ? 'X' : 'O';
             
             processBoxInput(box.getAttribute('data-pos'), playerTurnSymbol);
-            checkWin();
+            checkWin(gameBoard.getGameBoard());
         });
     });
 
@@ -214,7 +214,7 @@ const gameBoardManager = (function() {
         displayController.restartGameBoard();
     }
     const checkWin = () => {
-        const check = gameBoard.checkWin();
+        const check = gameBoard.checkWin(gameBoard.getGameBoard());
         const winIndexes = new Set();
         let winSymbol;
 
@@ -250,6 +250,9 @@ const aiBot = (function(gameboard) {
     const minimax = () => {
         ;
     }
+    const terminal = (gameboardState) => {
+        ;
+    }
 })();
 
 const gameBoard = (function() {
@@ -273,8 +276,8 @@ const gameBoard = (function() {
     }
     const getBoxSymbol = (boxPositionNumber) => gameBoardBoxes[boxPositionNumber].getSymbol();
     const checkBoxAvailable = (boxPositionNumber) => getBoxSymbol(boxPositionNumber) === null;
-    const checkRowWin = () => {
-        const boxesPerRow = Math.sqrt(gameBoardBoxes.length);
+    const checkRowWin = (gameBoardBoxesArr) => {
+        const boxesPerRow = Math.sqrt(gameBoardBoxesArr.length);
         let winningSymbol;
         let winningIndexes = [];
         let countRowsLeft = boxesPerRow;
@@ -307,8 +310,8 @@ const gameBoard = (function() {
         }
         return false;
     }
-    const checkColumnWin = () => {
-        const boxesPerColumn = Math.sqrt(gameBoardBoxes.length);
+    const checkColumnWin = (gameBoardBoxesArr) => {
+        const boxesPerColumn = Math.sqrt(gameBoardBoxesArr.length);
         let winningIndexes = [];
         let winningSymbol;
         let countColumnsLeft = boxesPerColumn;
@@ -341,17 +344,17 @@ const gameBoard = (function() {
         }
         return false;
     }
-    const checkDiagWin = () => {
-        if (gameBoardBoxes[0].getSymbol() !== null && gameBoardBoxes[4].getSymbol() !== null && gameBoardBoxes[8].getSymbol() !== null) {
-            if (gameBoardBoxes[0].getSymbol() === gameBoardBoxes[4].getSymbol() && gameBoardBoxes[4].getSymbol() === gameBoardBoxes[8].getSymbol()) {
-                const winningSymbol = gameBoardBoxes[0].getSymbol();
+    const checkDiagWin = (gameBoardBoxesArr) => {
+        if (gameBoardBoxesArr[0].getSymbol() !== null && gameBoardBoxesArr[4].getSymbol() !== null && gameBoardBoxesArr[8].getSymbol() !== null) {
+            if (gameBoardBoxesArr[0].getSymbol() === gameBoardBoxesArr[4].getSymbol() && gameBoardBoxesArr[4].getSymbol() === gameBoardBoxesArr[8].getSymbol()) {
+                const winningSymbol = gameBoardBoxesArr[0].getSymbol();
                 const winningIndexes = [0,4,8];
                 return { winningSymbol, winningIndexes }
             }
         }  
-        if (gameBoardBoxes[2].getSymbol() !== null && gameBoardBoxes[4].getSymbol() !== null && gameBoardBoxes[6].getSymbol() !== null) {
-            if (gameBoardBoxes[2].getSymbol() === gameBoardBoxes[4].getSymbol() && gameBoardBoxes[4].getSymbol() === gameBoardBoxes[6].getSymbol()) {
-                const winningSymbol = gameBoardBoxes[2].getSymbol();
+        if (gameBoardBoxesArr[2].getSymbol() !== null && gameBoardBoxesArr[4].getSymbol() !== null && gameBoardBoxesArr[6].getSymbol() !== null) {
+            if (gameBoardBoxesArr[2].getSymbol() === gameBoardBoxesArr[4].getSymbol() && gameBoardBoxesArr[4].getSymbol() === gameBoardBoxesArr[6].getSymbol()) {
+                const winningSymbol = gameBoardBoxesArr[2].getSymbol();
                 const winningIndexes = [2,4,6];
                 return { winningSymbol, winningIndexes }
             }
@@ -367,10 +370,10 @@ const gameBoard = (function() {
 
         return true;
     }
-    const checkWin = () => {
-        const rowWin = checkRowWin();
-        const colWin = checkColumnWin();
-        const diagWin = checkDiagWin();
+    const checkWin = (gameBoardBoxesArr) => {
+        const rowWin = checkRowWin(gameBoardBoxesArr);
+        const colWin = checkColumnWin(gameBoardBoxesArr);
+        const diagWin = checkDiagWin(gameBoardBoxesArr);
         return { rowWin, colWin, diagWin };
     }
     const restartGameBoard = () => {

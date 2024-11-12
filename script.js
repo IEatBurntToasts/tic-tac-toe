@@ -398,7 +398,7 @@ const aiBotManager = (function() {
     const createNewBoardState = (currentGameBoardState, positionNumber, symbol) => {
         const intPosNumber = parseInt(positionNumber);
 
-        return currentGameBoardState[intPosNumber].changeSymbol(symbol);
+        return currentGameBoardState[intPosNumber].slice().changeSymbol(symbol);
     }
     const availableMoves = (gameBoardState) => { // Ret. array of numbers for pos number of avail. boxes
         let availablePositions = [];
@@ -412,7 +412,7 @@ const aiBotManager = (function() {
         return availablePositions;
     }
 
-    return { findOptimalMove, minimax, terminal }
+    return { findOptimalMove, minimax, terminal, createNewBoardState, availableMoves }
 })();
 
 function createPlayer(name, symbol) {

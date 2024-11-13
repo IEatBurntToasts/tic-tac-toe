@@ -167,7 +167,7 @@ const gameManager = (function() {
         displayController.resetScore();
     }
     const resetPlayerTurn = () => {
-        playerTurn = 'p1';posNum
+        playerTurn = 'p1';
         displayController.resetPlayerTurn();
     }
     const advancePlayerTurn = () => {
@@ -308,11 +308,11 @@ const gameBoard = (function() {
             winningIndexes.push(currentColumnFirstIndex);
 
             for (let i = currentColumnFirstIndex; i < (boxesPerColumn * (boxesPerColumn - 1) + currentColumnFirstIndex); i += boxesPerColumn) {
-                if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + boxesPerColumn].getSymbol() === null) {
+                if (gameBoardBoxesArr[i].getSymbol() === null || gameBoardBoxesArr[i + boxesPerColumn].getSymbol() === null) {
                     currentColumnFirstIndex++;
                     break;
                 }
-                else if (gameBoardBoxes[i].getSymbol() !== gameBoardBoxes[i + boxesPerColumn].getSymbol()) {
+                else if (gameBoardBoxesArr[i].getSymbol() !== gameBoardBoxesArr[i + boxesPerColumn].getSymbol()) {
                     currentColumnFirstIndex++;
                     break;
                 } else {
@@ -321,7 +321,7 @@ const gameBoard = (function() {
                 }
             }
             if (symbolsMatched === (boxesPerColumn - 1)) {
-                winningSymbol = gameBoardBoxes[currentColumnFirstIndex].getSymbol();
+                winningSymbol = gameBoardBoxesArr[currentColumnFirstIndex].getSymbol();
                 return { winningSymbol, winningIndexes }
             }
             winningIndexes = [];
@@ -379,7 +379,7 @@ const aiBotManager = (function() {
         for (const gameBoardBox of gameBoard) {
             if (gameBoardBox.getSymbol() === null) {
                 const gameBoardBoxPosNum = gameBoardBox.getPositionNumber();
-                let gameBoardCopy = structuredClone(gameBoard);
+                let gameBoardCopy = cloneGameBoard(gameBoard);
 
                 gameBoardCopy[gameBoardBoxPosNum].changeSymbol('O');
 
@@ -423,16 +423,18 @@ const aiBotManager = (function() {
                 const score = (value.winningSymbol === 'X') ? 1 : -1;
 
                 return score;
-            } else if (gameBoard.checkTie(gameBoardState)) {
-                return 0;
             }
+        }
+
+        if (gameBoard.checkTie(gameBoardState)) {
+            return 0;
         }
 
         return false;
     }
     const createNewBoardState = (currentGameBoardState, positionNumber, symbol) => {
         const intPosNumber = parseInt(positionNumber);
-        const newBoard = structuredClone(currentGameBoardState);
+        const newBoard = cloneGameBoard(currentGameBoardState);
 
         newBoard[intPosNumber].changeSymbol(symbol);
 
@@ -448,6 +450,15 @@ const aiBotManager = (function() {
         }
 
         return availablePositions;
+    }
+    const cloneGameBoard = (originalGameBoard) => {
+        let cloneGameBoard = [];
+
+        for (let i = 0; i < 9; i++) {
+            cloneGameBoard.push(createTicTacToeBox(i, originalGameBoard[i].getSymbol()));
+        }
+
+        return cloneGameBoard;
     }
 
     return { findOptimalMove }

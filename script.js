@@ -372,11 +372,27 @@ const gameBoard = (function() {
 })();
 
 const aiBotManager = (function() {
-    let bestScore = Infinity; // Bot will be minimizing player
-    let gameBoardCopy = gameBoard.getGameBoard().slice();
+    const findOptimalMove = (gameBoard) => {
+        let bestScore = Infinity; // Bot will be minimizing player
+        let bestPosition = null;
 
-    const findOptimalMove = () => {
-        ;
+        for (const gameBoardBox of gameBoardCopy) {
+            if (gameBoardBox.getSymbol() === null) {
+                const gameBoardBoxPosNum = gameBoardBox.getPositionNumber();
+                let gameBoardCopy = gameBoard.slice();
+
+                gameBoardCopy[gameBoardBoxPosNum].changeSymbol('O');
+                
+                let score = minimax(gameBoardCopy, 'p1');
+
+                if (score < bestScore) {
+                    score = bestScore;
+                    bestPosition = gameBoardBoxPosNum;
+                }
+            }
+        }
+
+        return { bestScore, bestPosition }
     }
     const minimax = (gameBoardState, currentTurn) => {
         if (terminal(gameBoardState) !== false) {

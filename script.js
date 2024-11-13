@@ -274,11 +274,11 @@ const gameBoard = (function() {
             winningIndexes.push(currentRowFirstIndex);
 
             for (let i = currentRowFirstIndex; i < (boxesPerRow + currentRowFirstIndex - 1); i++) {
-                if (gameBoardBoxes[i].getSymbol() === null || gameBoardBoxes[i + 1].getSymbol() === null) {
+                if (gameBoardBoxesArr[i].getSymbol() === null || gameBoardBoxesArr[i + 1].getSymbol() === null) {
                     currentRowFirstIndex += boxesPerRow;
                     break;
                 }
-                else if (gameBoardBoxes[i].getSymbol() !== gameBoardBoxes[i + 1].getSymbol()) {
+                else if (gameBoardBoxesArr[i].getSymbol() !== gameBoardBoxesArr[i + 1].getSymbol()) {
                     currentRowFirstIndex += boxesPerRow;
                     break;
                 } else {
@@ -287,7 +287,7 @@ const gameBoard = (function() {
                 }
             }
             if (symbolsMatched === (boxesPerRow - 1)) {
-                winningSymbol = gameBoardBoxes[currentRowFirstIndex].getSymbol();
+                winningSymbol = gameBoardBoxesArr[currentRowFirstIndex].getSymbol();
                 return { winningSymbol, winningIndexes }
             }
             winningIndexes = [];

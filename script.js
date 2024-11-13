@@ -167,7 +167,7 @@ const gameManager = (function() {
         displayController.resetScore();
     }
     const resetPlayerTurn = () => {
-        playerTurn = 'p1';
+        playerTurn = 'p1';posNum
         displayController.resetPlayerTurn();
     }
     const advancePlayerTurn = () => {
@@ -376,17 +376,17 @@ const aiBotManager = (function() {
         let bestScore = Infinity; // Bot will be minimizing player
         let bestPosition = null;
 
-        for (const gameBoardBox of gameBoardCopy) {
+        for (const gameBoardBox of gameBoard) {
             if (gameBoardBox.getSymbol() === null) {
                 const gameBoardBoxPosNum = gameBoardBox.getPositionNumber();
-                let gameBoardCopy = gameBoard.slice();
+                let gameBoardCopy = structuredClone(gameBoard);
 
                 gameBoardCopy[gameBoardBoxPosNum].changeSymbol('O');
-                
+
                 let score = minimax(gameBoardCopy, 'p1');
 
                 if (score < bestScore) {
-                    score = bestScore;
+                    bestScore = score;
                     bestPosition = gameBoardBoxPosNum;
                 }
             }
@@ -400,7 +400,8 @@ const aiBotManager = (function() {
         }   
 
         if (currentTurn === 'p1') {
-            value = -Infinity;
+            let value = -Infinity;
+
             for (const availableMove of availableMoves(gameBoardState)) {
                 value = Math.max(value, minimax(createNewBoardState(gameBoardState, availableMove, 'X'), 'p2'));
             }
@@ -408,7 +409,8 @@ const aiBotManager = (function() {
         }
 
         if (currentTurn === 'p2') {
-            value = Infinity;
+            let value = Infinity;
+
             for (const availableMove of availableMoves(gameBoardState)) {
                 value = Math.min(value, minimax(createNewBoardState(gameBoardState, availableMove, 'O'), 'p1'));
             }
@@ -430,7 +432,7 @@ const aiBotManager = (function() {
     }
     const createNewBoardState = (currentGameBoardState, positionNumber, symbol) => {
         const intPosNumber = parseInt(positionNumber);
-        const newBoard = currentGameBoardState.slice();
+        const newBoard = structuredClone(currentGameBoardState);
 
         newBoard[intPosNumber].changeSymbol(symbol);
 
@@ -448,7 +450,7 @@ const aiBotManager = (function() {
         return availablePositions;
     }
 
-    return { findOptimalMove, minimax, terminal, createNewBoardState, availableMoves }
+    return { findOptimalMove }
 })();
 
 function createPlayer(name, symbol) {
@@ -465,9 +467,7 @@ function createPlayer(name, symbol) {
     return { getName, getSymbol, getScore, changeName, changeSymbol, addScore, resetScore }
 }
 
-function createTicTacToeBox(positionNumber) {
-    let symbol = null;
-
+function createTicTacToeBox(positionNumber, symbol = null) {
     const getPositionNumber = () => positionNumber;
     const changeSymbol = (newSymbol) => {
         symbol = newSymbol;

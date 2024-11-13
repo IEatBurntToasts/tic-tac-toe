@@ -379,7 +379,25 @@ const aiBotManager = (function() {
         ;
     }
     const minimax = (gameBoardState, currentTurn) => {
-        ;   
+        if (terminal(gameBoardState) !== false) {
+            return terminal(gameBoardState);
+        }   
+
+        if (currentTurn === 'p1') {
+            value = -Infinity;
+            for (const availableMove of availableMoves(gameBoardState)) {
+                value = Math.max(value, minimax(createNewBoardState(gameBoardState, availableMove, 'X'), 'p2'));
+            }
+            return value;
+        }
+
+        if (currentTurn === 'p2') {
+            value = Infinity;
+            for (const availableMove of availableMoves(gameBoardState)) {
+                value = Math.min(value, minimax(createNewBoardState(gameBoardState, availableMove, 'O'), 'p1'));
+            }
+            return value;
+        }
     }
     const terminal = (gameBoardState) => {
         for (const [key, value] of Object.entries(gameBoard.checkWin(gameBoardState))) {

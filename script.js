@@ -126,6 +126,7 @@ const gameManager = (function() {
     continueButton.addEventListener(('click'), () => {
         advancePlayerTurn();
         gameBoardManager.restartGameBoard();
+        aiBotManager.move(playerTurn);
     });
     form.addEventListener('submit', (event) => {
         const p1Name = document.getElementById('p1-name').value;
@@ -143,13 +144,7 @@ const gameManager = (function() {
     const switchPlayerTurn = () => {
         displayController.switchPlayerTurn(playerTurn);
         playerTurn = (playerTurn === 'p1') ? 'p2' : 'p1';
-
-        if (playerTurn === 'p2' && aiBotManager.getBotState()) {
-            displayController.disableElement(gameBoard);
-            aiBotManager.move();
-        } else {
-            displayController.enableElement(gameBoard);
-        }
+        aiBotManager.move(playerTurn);
     } 
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
         updateName('p1', p1Name);
@@ -397,12 +392,14 @@ const aiBotManager = (function() {
     let aiBotPlays = false;
     let botDifficulty = 'easy';
 
-    const move = () => {
+    const move = (turn) => {
         const gameBoardState = gameBoard.getGameBoard();
-        const optimalBoxMovePosition = findOptimalMove(gameBoardState);
-        const optimalMoveBox = document.querySelector(`[data-pos='${optimalBoxMovePosition}']`);
 
-        if (terminal(gameBoardState) === false) {
+        if (terminal(gameBoardState) === false && turn === 'p2' && aiBotPlays) {
+            const optimalBoxMovePosition = findOptimalMove(gameBoardState);
+            const optimalMoveBox = document.querySelector(`[data-pos='${optimalBoxMovePosition}']`);
+
+            
             optimalMoveBox.click();
         }
     }

@@ -127,8 +127,8 @@ const gameManager = (function() {
     continueButton.addEventListener(('click'), () => {
         advancePlayerTurn();
         gameBoardManager.restartGameBoard();
-        aiBotManager.move(playerTurn);
         gameBoardManager.changeMatchOverState(false);
+        aiBotManager.move(playerTurn);
     });
     form.addEventListener('submit', (event) => {
         const p1Name = document.getElementById('p1-name').value;
@@ -261,9 +261,10 @@ const gameBoardManager = (function() {
             displayController.displayTie();
         }
     }
+    const getMatchOverState = () => matchOver;
     const changeMatchOverState = (matchState) => matchOver = matchState;
 
-    return { restartGameBoard, processBoxInput, checkWin, changeMatchOverState }
+    return { restartGameBoard, processBoxInput, checkWin, getMatchOverState, changeMatchOverState }
 })();
 
 const gameBoard = (function() {
@@ -407,7 +408,6 @@ const aiBotManager = (function() {
         if (terminal(gameBoardState) === false && turn === 'p2' && aiBotPlays) {
             const optimalBoxMovePosition = findOptimalMove(gameBoardState);
             const optimalMoveBox = document.querySelector(`[data-pos='${optimalBoxMovePosition}']`);
-
             
             optimalMoveBox.click();
         }

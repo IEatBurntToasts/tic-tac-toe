@@ -121,12 +121,14 @@ const gameManager = (function() {
             resetPlayerTurn();
             resetScore();
             gameBoardManager.restartGameBoard();
+            gameBoardManager.changeMatchOverState(false);
         });
     });
     continueButton.addEventListener(('click'), () => {
         advancePlayerTurn();
         gameBoardManager.restartGameBoard();
         aiBotManager.move(playerTurn);
+        gameBoardManager.changeMatchOverState(false);
     });
     form.addEventListener('submit', (event) => {
         const p1Name = document.getElementById('p1-name').value;
@@ -209,13 +211,17 @@ const gameManager = (function() {
 
 const gameBoardManager = (function() {
     const gameBoardBoxes = document.querySelectorAll('.grid-boxes');
+    let matchOver = false;
 
     gameBoardBoxes.forEach((box) => {
         box.addEventListener('click', () => {
             const playerTurnSymbol = (gameManager.getPlayerTurn() === 'p1') ? 'X' : 'O';
             
             processBoxInput(box.getAttribute('data-pos'), playerTurnSymbol);
-            checkWin(gameBoard.getGameBoard());
+
+            if (matchOver === false) {
+                checkWin(gameBoard.getGameBoard());
+            }
         });
     });
 
@@ -247,14 +253,17 @@ const gameBoardManager = (function() {
 
         if (winSymbol !== undefined) {
             gameManager.processWin(winIndexes, winSymbol);
+            matchOver = true;
         }
 
         if (gameBoard.checkTie(gameBoard.getGameBoard())) {
+            matchOver = true;
             displayController.displayTie();
         }
     }
+    const changeMatchOverState = (matchState) => matchOver = matchState;
 
-    return { restartGameBoard, processBoxInput, checkWin }
+    return { restartGameBoard, processBoxInput, checkWin, changeMatchOverState }
 })();
 
 const gameBoard = (function() {

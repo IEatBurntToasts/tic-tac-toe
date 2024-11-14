@@ -25,8 +25,8 @@ const displayController = (function() {
             boxSpan.textContent = '';
         });
 
-        gameBoard.classList.remove('disabled');
-        continueButton.classList.add('disabled');
+        enableElement(gameBoard);
+        disableElement(continueButton);
         gameWinModal.classList.remove('active');
     }
     const resetScore = () => {
@@ -51,11 +51,11 @@ const displayController = (function() {
         }
 
         addScore(winner);
-        gameBoard.classList.add('disabled');
-        continueButton.classList.remove('disabled');
+        disableElement(gameBoard);
+        enableElement(continueButton);
     }
     const displayTie = () => {
-        continueButton.classList.remove('disabled');
+        enableElement(continueButton);
     }
     const displayGameWin = (winner) => {
         const p1ElementName = document.querySelector('.player.p1 p').textContent;
@@ -70,7 +70,7 @@ const displayController = (function() {
         winDetailsElement.textContent = `${p1ElementName} ${p1Score} — ${p2Score} ${p2ElementName}`;
 
         gameWinModal.classList.add('active');
-        continueButton.classList.add('disabled');
+        disableElement(continueButton);
     }
     const switchPlayerTurn = (currentPlayerTurn) => {
         const newPlayerTurn = (currentPlayerTurn === 'p1') ? 'p2' : 'p1';
@@ -82,11 +82,18 @@ const displayController = (function() {
         document.querySelector('.player.p1 p').classList.add('turn');
         document.querySelector('.player.p2 p').classList.remove('turn');
     }
+    const disableElement = (element) => {
+        element.classList.add('disabled');
+    }
+    const enableElement = (element) => {
+        element.classList.remove('disabled');
+    }
 
-    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayTie, displayGameWin, switchPlayerTurn, resetPlayerTurn }
+    return { updateName, updateBoxSymbol, restartGameBoard, resetScore, displayWin, displayTie, displayGameWin, switchPlayerTurn, resetPlayerTurn, disableElement, enableElement }
 })();
 
 const gameManager = (function() {
+    const gameBoard = document.querySelector('.gameboard-grid');
     const restartButtons = document.querySelectorAll('.restart');
     const settingsButton = document.querySelector('.settings');
     const continueButton = document.querySelector('.continue');
@@ -136,11 +143,19 @@ const gameManager = (function() {
     const switchPlayerTurn = () => {
         displayController.switchPlayerTurn(playerTurn);
         playerTurn = (playerTurn === 'p1') ? 'p2' : 'p1';
+
+        if (playerTurn === 'p2' && aiBotManager.getBotState()) {
+            displayController.disableElement(gameBoard);
+            aiBotManager.move();
+        } else {
+            displayController.enableElement(gameBoard);
+        }
     } 
     const processFormSubmit = (p1Name, p2Name, pointsToWin, botSelect, botDifficulty) => {
         updateName('p1', p1Name);
         updateName('p2', p2Name);
         updatePointsToWin(pointsToWin);
+        updateBotState(botSelect, botDifficulty);
     }
     const updateName = (player, name) => {
         const playerObj = (player === 'p1') ? p1 : p2;
@@ -160,6 +175,13 @@ const gameManager = (function() {
                 resetScore();
             }
         }
+    }
+    const updateBotState = (botSelect, botDifficulty) => {
+        if (botSelect !== aiBotManager.getBotState()) {
+            restartButtons[0].click();
+        }
+
+        aiBotManager.updateBotState(botSelect, botDifficulty);
     }
     const resetScore = () => {
         p1.resetScore();
@@ -237,7 +259,7 @@ const gameBoardManager = (function() {
         }
     }
 
-    return { restartGameBoard }
+    return { restartGameBoard, processBoxInput, checkWin }
 })();
 
 const gameBoard = (function() {
@@ -372,6 +394,15 @@ const gameBoard = (function() {
 })();
 
 const aiBotManager = (function() {
+    let aiBotPlays = false;
+    let botDifficulty = 'easy';
+
+    const move = () => {
+        const optimalBoxMovePosition = findOptimalMove(gameBoard.getGameBoard());
+        const optimalMoveBox = document.querySelector(`[data-pos='${optimalBoxMovePosition}']`);
+
+        optimalMoveBox.click();
+    }
     const findOptimalMove = (gameBoard) => {
         let bestScore = Infinity; // Bot will be minimizing player
         let bestPosition = null;
@@ -392,7 +423,7 @@ const aiBotManager = (function() {
             }
         }
 
-        return { bestScore, bestPosition }
+        return bestPosition;
     }
     const minimax = (gameBoardState, currentTurn) => {
         if (terminal(gameBoardState) !== false) {
@@ -460,8 +491,13 @@ const aiBotManager = (function() {
 
         return cloneGameBoard;
     }
+    const getBotState = () => aiBotPlays;
+    const updateBotState = (newState, newDifficulty) => {
+        aiBotPlays = newState;
+        botDifficulty = newDifficulty;
+    };
 
-    return { findOptimalMove }
+    return { move, getBotState, updateBotState }
 })();
 
 function createPlayer(name, symbol) {

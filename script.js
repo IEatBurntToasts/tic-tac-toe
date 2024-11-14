@@ -64,10 +64,12 @@ const displayController = (function() {
         const p2Score = document.querySelector('.score.p2').textContent;
         const winnerName = (winner === 'p1') ? p1ElementName : p2ElementName;
         const winnerTextElement = gameWinModal.querySelector('.winner-text');
-        const winDetailsElement = gameWinModal.querySelector('.win-details');
+        const detailsP1Element = gameWinModal.querySelector('.details-p1');
+        const detailsP2Element = gameWinModal.querySelector('.details-p2');
 
         winnerTextElement.textContent = `${winnerName} wins!`;
-        winDetailsElement.textContent = `${p1ElementName} ${p1Score} — ${p2Score} ${p2ElementName}`;
+        detailsP1Element.textContent = `${p1ElementName} ${p1Score}`;
+        detailsP2Element.textContent = `${p2ElementName} ${p2Score}`;
 
         gameWinModal.classList.add('active');
         disableElement(continueButton);

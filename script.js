@@ -398,10 +398,13 @@ const aiBotManager = (function() {
     let botDifficulty = 'easy';
 
     const move = () => {
-        const optimalBoxMovePosition = findOptimalMove(gameBoard.getGameBoard());
+        const gameBoardState = gameBoard.getGameBoard();
+        const optimalBoxMovePosition = findOptimalMove(gameBoardState);
         const optimalMoveBox = document.querySelector(`[data-pos='${optimalBoxMovePosition}']`);
 
-        optimalMoveBox.click();
+        if (terminal(gameBoardState) === false) {
+            optimalMoveBox.click();
+        }
     }
     const findOptimalMove = (gameBoard) => {
         let bestScore = Infinity; // Bot will be minimizing player

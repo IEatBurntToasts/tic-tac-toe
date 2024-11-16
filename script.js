@@ -406,12 +406,21 @@ const aiBotManager = (function() {
 
     const move = (turn) => {
         const gameBoardState = gameBoard.getGameBoard();
+        const rng = rollRNG();
+        const diffRoll = { 'easy':0.4, 'medium':0.5, 'hard':0.7, 'impossible':0.8  }
 
         if (terminal(gameBoardState) === false && turn === 'p2' && aiBotPlays) {
-            const optimalBoxMovePosition = findOptimalMove(gameBoardState);
-            const optimalMoveBox = document.querySelector(`[data-pos='${optimalBoxMovePosition}']`);
-            
-            optimalMoveBox.click();
+            if (rng < diffRoll[botDifficulty]) {
+                const optimalBoxMovePosition = findOptimalMove(gameBoardState);
+                const optimalMoveBox = document.querySelector(`[data-pos='${optimalBoxMovePosition}']`);
+                
+                optimalMoveBox.click();
+            } else {
+                const randomBoxMovePosition = gameBoardState[Math.floor(Math.random() * gameBoardState.length)];
+                const randomOptimalMoveBox = document.querySelector(`[data-pos='${randomBoxMovePosition}']`);
+
+                randomOptimalMoveBox.click();
+            }
         }
     }
     const findOptimalMove = (gameBoard) => {
@@ -507,6 +516,7 @@ const aiBotManager = (function() {
         aiBotPlays = newState;
         botDifficulty = newDifficulty;
     };
+    const rollRNG = () => Math.random();
 
     return { move, getBotState, updateBotState }
 })();

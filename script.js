@@ -416,7 +416,8 @@ const aiBotManager = (function() {
                 
                 optimalMoveBox.click();
             } else {
-                const randomBoxMovePosition = gameBoardState[Math.floor(Math.random() * gameBoardState.length)];
+                const availableMovesArr = availableMoves(gameBoardState);
+                const randomBoxMovePosition = availableMovesArr[Math.floor(Math.random() * availableMovesArr.length)];
                 const randomOptimalMoveBox = document.querySelector(`[data-pos='${randomBoxMovePosition}']`);
 
                 randomOptimalMoveBox.click();

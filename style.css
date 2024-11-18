@@ -54,6 +54,11 @@ h1 {
     row-gap: 35px;
 }
 
+button,
+select {
+    color: #000000;
+}
+
 /* Gameboard Grid */
 
 .gameboard-grid {

@@ -99,7 +99,6 @@ const gameManager = (function() {
     const restartButtons = document.querySelectorAll('.restart');
     const settingsButton = document.querySelector('.settings');
     const continueButton = document.querySelector('.continue');
-    const themeButton = document.querySelector('.theme-mode');
     const modal = document.querySelector('.modal.form');
     const overlay = document.querySelector('.overlay');
     const form = document.querySelector('form');

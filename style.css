@@ -142,7 +142,7 @@ h1 {
     width: 100%;
 }
 
-.buttons-container button:not(.theme-mode) {
+.buttons-container button {
     padding: 10px 25px;
     border-radius: 15px;
     border: transparent;

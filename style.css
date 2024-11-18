@@ -56,7 +56,7 @@ h1 {
 
 button,
 select {
-    color: #000000;
+    -webkit-text-fill-color: #000000;
 }
 
 /* Gameboard Grid */

@@ -16,4 +16,6 @@ The easier the difficulty, the lower that chance.
 Player 1 is always X. <br />
 Player 2 is always O, and will always be the bot when playing against bot.
 
+Switch between playing against bot and player any time.
+
 ## Have Fun!

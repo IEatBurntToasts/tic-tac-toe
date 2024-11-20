@@ -346,7 +346,7 @@ form button:active {
     background-color: #e6e6e6;
 }
 
-/* Copyright */
+/* Copyright Footer */
 
 footer {
     display: flex;
@@ -359,8 +359,23 @@ footer {
     margin-top: auto;
     width: 100%;
     padding: 1.1rem;
+    gap: 5px;
 }
 
 footer p {
     letter-spacing: 2px;
 }
+
+footer a {
+    display: flex;
+}
+
+footer img {
+    width: 23px;
+    transition: 150ms ease-in-out;
+}
+
+footer img:hover {
+    transform: rotate(180deg) scale(1.3);
+}
+

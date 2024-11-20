@@ -345,3 +345,22 @@ form button:active {
 .win-text-container button.restart:hover {
     background-color: #e6e6e6;
 }
+
+/* Copyright */
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    font-size: 1.2rem;
+    bottom: 0;
+    position: relative;
+    margin-top: auto;
+    width: 100%;
+    padding: 1.1rem;
+}
+
+footer p {
+    letter-spacing: 2px;
+}

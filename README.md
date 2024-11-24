@@ -6,7 +6,7 @@ This tic tac toe game can be played with 2 players manually or with a bot.
 
 Bot features 4 difficulties:
 - Easy
-- Medium (High chance of winning
+- Medium (High chance of winning)
 - Hard (High chance of tying)
 - Impossible (Can only tie at best)
 

@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-Link: https://dracozure.github.io/tic-tac-toe/
+Link: https://ieatburnttoasts.github.io/tic-tac-toe/
 
 This tic tac toe game can be played with 2 players manually or with a bot.
 
